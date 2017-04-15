@@ -5,13 +5,6 @@ this libary type thing is for data manipulation and svg manipulation with its ow
 /*
 these are for arrays
 */
-function arrayForEach (arr, func) {
-    var l = arr.length;
-    var i = 0;
-    for (i = 0; i < l; i++) {
-        func(arr[i], i);
-    }
-}
 
 function arrayRemove (arr, obj) {
     if (arr.indexOf(obj) != -1) {

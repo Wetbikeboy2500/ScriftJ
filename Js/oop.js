@@ -15,9 +15,7 @@ window.onmouseup = function () {
     //clear moving array and the objects being moved
     info("Mouse up");
     if (moving.length > 0) {
-        arrayForEach(moving, function (a, i) {
-            a.stop();
-        });
+        moving.forEach((a) => { a.stop(); });
         //this is where it looks for connections to other blocks
         var response = check_connect(moving[0]);
         //logic for connecting to other blocks and groups
@@ -30,12 +28,10 @@ window.onmouseup = function () {
                 //insert into array regardless if it is first or not
                 groups[response.group] = arrayInsertArray(groups[response.group], moving, groups[response.group].indexOf(response) + 1);
                 //now need to update everything in moving array about its new group
-                arrayForEach(moving, (a, i) => {
-                    a.group = response.group;
-                });
+                moving.forEach((a) => { a.group = response.group; });
                 //need to then update every blocks position of the new group
                 let h = 0;
-                arrayForEach(groups[response.group], (a, i) => {
+                groups[response.group].forEach((a) => {
                     a.x = groups[response.group][0].x;
                     a.y = groups[response.group][0].y + h;
                     a.render();
@@ -47,17 +43,13 @@ window.onmouseup = function () {
                 //add moving to a new group
                 arrayAdd(groups, moving);
                 //now set moving blocks to new group array number
-                arrayForEach(moving, (a, i) => {
-                    a.group = groups.length - 1;
-                });
+                moving.forEach((a) => { a.group = groups.length - 1; });
             }
         } else { //then delete this block and the others
             //first remove itself from previous group
             groups[moving[0].group] = arrayRemoveAfter(groups[moving[0].group], moving[0]);
             //now delete all objects in moving array
-            arrayForEach(moving, (a, i) => {
-                a.del();
-            });
+            moving.forEach((a) => { a.del(); });
         }
         clear_moving();
         //update sprites group no matter what
@@ -84,7 +76,7 @@ function load () {
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { //checks to see what browser you are using
         info("Firefox Detected");
         let inputs = document.getElementsByTagName("input");
-        arrayForEach(inputs, function (a, i) {
+        inputs.forEach((a) => {
             a.style.position = "relative";
             a.style.bottom = "1px";
             a.style.right = "1px";
