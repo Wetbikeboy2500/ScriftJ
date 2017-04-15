@@ -5,9 +5,10 @@ function  init_run () {
     compile_array = [];
     log("initiate run");
     //fill the sprites array with needed info
-    arrayForEach(get_sprites(), (a, i)=>{
+    get_sprites().forEach((a, i) => {
         sprites[i] = a.group;
     });
+    
     for (let i = 0; i < sprites.length; i++) {
         run_array[i] = sprites[i].filter((a) => {
             return a != 0 && a[0].type === 0 && a.length > 1;
