@@ -78,8 +78,8 @@ function createblock (target) {
                 createoption("rectangle", "Rectangle");
             addatt("value", value, fara);
         cara.appendChild(fara);
-        para.appendChild(cara);
-        main.appendChild(para);
+        para.dom.appendChild(cara);
+        main.appendChild(para.dom);
 		break;
     case 5://Chane X Block
         createinputblock(x, y, 73, "Change x:", "number", id, color, value);
@@ -107,7 +107,7 @@ function createblock (target) {
                 node = document.createTextNode("for");
                 fara.appendChild(node);
               cara.appendChild(fara);
-            para.appendChild(cara);
+            para.dom.appendChild(cara);
             //first foreign object
             cara = document.createElementNS("http://www.w3.org/2000/svg","foreignObject");
                 addattNS("width", "53", cara);
@@ -122,7 +122,7 @@ function createblock (target) {
                 addatt("onchange", "input(this, 0)", fara);
                 addatt("value", value, fara);
             cara.appendChild(fara);
-        para.appendChild(cara);
+        para.dom.appendChild(cara);
         //second foreign
         cara = document.createElementNS("http://www.w3.org/2000/svg","foreignObject");
                 addattNS("width", "26", cara);
@@ -137,8 +137,8 @@ function createblock (target) {
                 addatt("onchange", "input(this, 1)", fara);
                 addatt("value", value1, fara);
             cara.appendChild(fara);
-        para.appendChild(cara);
-main.appendChild(para); 
+        para.dom.appendChild(cara);
+main.appendChild(para.dom); 
         break;
         case 7://sound block
             cara = document.createElementNS("http://www.w3.org/2000/svg","g");
@@ -190,9 +190,9 @@ main.appendChild(para);
                 addatt("fill", "white", fara);
                 node = document.createTextNode("Varible");
                 fara.appendChild(node);
-            para.appendChild(fara);
+            para.dom.appendChild(fara);
             main = document.getElementById("topBlocks");
-        main.appendChild(para);
+        main.appendChild(para.dom);
         break;
 	}
 
@@ -288,6 +288,10 @@ function reload_blocks (group) {
             for (let i2 = 0; i2 < new_group[i].length; i2++) {
                 createblock(new_group[i][i2]);
                 new_group[i][i2].set_dom();
+            }
+        }
+    }
+}               new_group[i][i2].set_dom();
             }
         }
     }
