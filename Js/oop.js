@@ -79,11 +79,11 @@ function load () {
             a.style.right = "1px";
         });
     }
-    info("Version 12.4.2")
-    sprite_id += 1;
-    sprites[sprite_id] = new sprite("0,0 100,0 100,100 0,100", "orange", sprite_id);
+    info("Version 12.5.0")
     sprite_id += 1;
     sprites[sprite_id] = new sprite("0,0 200,0 200,100 0,100", "green", sprite_id);
+    sprite_id += 1;
+    sprites[sprite_id] = new sprite("0,0 100,0 100,100 0,100", "orange", sprite_id);
     current_sprite = sprites[0];//need to keep this to make sure the program can start off corectly
     select_sprite(current_sprite);
 }
