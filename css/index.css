@@ -1,4 +1,3 @@
-/*mainpage css */
 *{
 font-family:courier;
 cursor:default;
@@ -48,9 +47,7 @@ padding: 0px 20px 0px 0px;
 }
 #infocenter{
     position: absolute;
-    top: 60px;
-    min-width: 325px;
-    padding: 5px;
+    top:60px;
 }
 #updatelog{
 border-radius: 10px;
@@ -80,15 +77,14 @@ a:hover{
 color: #0080BC;
 }
 footer{
-    border-top-color: #F1F1F1;
-    border-top-style: solid;
-    border-top-width: 1px;
-    width: 100%;
-    height: 50px;
-    position: absolute;
-    bottom: 0px;
-    text-align: center;
-    display: block;
+border-top-color: #F1F1F1;
+border-top-style: solid;
+border-top-width: 1px;
+width: 100%;
+position: absolute;
+bottom: 0px;
+text-align: center;
+display:block;
 }
 #button1:hover{
 -webkit-animation-name: ex1; 
@@ -113,11 +109,4 @@ h2, h3{
 @keyframes ex3 {
 	0%	{color: #25aff4;}
 	100%	{color: #0080BC;}
-}
-.button p {
-    text-align: center;
-    color: #fff;
-}
-.button {
-    cursor: pointer;
 }

@@ -4,54 +4,47 @@ var tmpobj, gameplayer, sprites, sprtarget, clock, i, sprid, runlist = [], arr =
 
 function initrun() {
     runlist = getlist();
-    setupstsp();
-
-    if (runlist.length > 0) {
+	setupstsp();
+	
+	if (runlist.length > 0) {
         arr = getarray();
         i = 0;
-        tmpobj = arr[arr[runlist[i]].connecting];
-        clock = setInterval(function () {
-            compilerun();
-        }, 3);
+        runnext(arr[runlist[i]]);
+	} else {
+        console.info("No start blocks")
     }
 }
 
 function setupstsp() {
-    //fix elemements
-    document.getElementById("dtext").style.visibility = "hidden";
-    document.getElementById("dtext1").style.visibility = "hidden";
-    //get elements
+	//fix elemements
+	document.getElementById("dtext").style.visibility = "hidden";
+	document.getElementById("dtext1").style.visibility = "hidden";
+	//get elements
     sprid = 0;
-    refresh();
+	refresh();
 }
 
-function compilerun() {
-    if (i < runlist.length) {
-        if (tmpobj.connecting == -1) {
-            runcode();
-            clearInterval(clock);
-            i++;
-            if (i < runlist.length) {
-                tmpobj = arr[arr[runlist[i]].connecting];
-                clock = setInterval(function () {
-                    compilerun();
-                }, 0);
-            }
-        } else {
-            runcode();
-            tmpobj = arr[tmpobj.connecting];
+//a is current one it is on
+function runnext(a) {
+    if (a.connecting != -1) {
+        runcode(arr[a.connecting]);
+    } else {
+        i++;
+        if (i < runlist.length) {
+            runnext(arr[runlist[i]])
         }
     }
 }
 
-function runcode() {
-    switch (tmpobj.type) {
-        case 1:
+function runcode(tmpobj) {
+	switch (tmpobj.type) {
+	   case 1:
             if (/\S/.test(tmpobj.getinput())){
                 spritesay(tmpobj.getinput());
             }
-            break;
-        case 2:
+            setTimeout(function(){ runnext(tmpobj); }, 3);
+		break;
+	   case 2:
             if (sprtarget.id == "circle") {
                 if (movetype == 1) {
                     setatt(sprtarget, "cy", Number(sprtarget.getAttribute("cy")) - Number(tmpobj.getinput()));
@@ -74,7 +67,7 @@ function runcode() {
                     setatt(sprtarget, "x", Number(sprtarget.getAttribute("x")) + Number(tmpobj.getinput()));
                     x += Number(tmpobj.getinput());
                 } else if (movetype == 3) {
-                    setatt(sprtarget, "y", Number(sprtarget.getAttribute("y")) + Number(tmpobj.getinput()));
+                     setatt(sprtarget, "y", Number(sprtarget.getAttribute("y")) + Number(tmpobj.getinput()));
                     y += Number(tmpobj.getinput());
                 } else if (movetype == 4) {
                     setatt(sprtarget, "x", Number(sprtarget.getAttribute("x")) - Number(tmpobj.getinput()));
@@ -82,17 +75,19 @@ function runcode() {
                 }
             }
             updatesaycheck();
-            break;
+            setTimeout(function(){ runnext(tmpobj); }, 3);
+		break;
         case 5:
             if(sprtarget.id == "circle") {
-                setatt(sprtarget, "cx", Number(sprtarget.getAttribute("cx")) + Number(tmpobj.getinput()));
+            setatt(sprtarget, "cx", Number(sprtarget.getAttribute("cx")) + Number(tmpobj.getinput()));
             } else if (sprtarget.id == "rect") {
-                setatt(sprtarget, "x", Number(sprtarget.getAttribute("x")) + Number(tmpobj.getinput()));
+            setatt(sprtarget, "x", Number(sprtarget.getAttribute("x")) + Number(tmpobj.getinput()));
             }
             x += Number(tmpobj.getinput());
-            updatesaycheck();            
-            break;
-        case 3:
+            updatesaycheck();    
+            setTimeout(function(){ runnext(tmpobj); }, 3);
+        break;
+	   case 3:
             if (tmpobj.getinput() == "red") {
                 setatt(sprtarget, "fill", "red");
             } else if (tmpobj.getinput() == "blue") {
@@ -102,22 +97,29 @@ function runcode() {
             } else if (tmpobj.getinput() == "yellow") {
                 setatt(sprtarget, "fill", "yellow");
             }
-            break;
+            setTimeout(function(){ runnext(tmpobj); }, 3);
+        break;
         case 4:
             if (tmpobj.getinput() == "rectangle" && sprtarget.id == "circle") {
                 changesprite("rect", x, y, sprtarget.getAttribute("fill"), sprtarget);
             } else if (tmpobj.getinput() == "circle" && sprtarget.id == "rect") {
                 changesprite("circle", x, y, sprtarget.getAttribute("fill"), sprtarget);
             }
-            break;
+            setTimeout(function(){ runnext(tmpobj); }, 3);
+        break;
         case 6:
+            if (/\S/.test(tmpobj.getinput(0))){
             spritesay(tmpobj.getinput(0));
+            } else {
+                document.getElementById("dtext").style.visibility = "hidden";
+	           document.getElementById("dtext1").style.visibility = "hidden";
+            }
             setTimeout(function(){
                 document.getElementById("dtext").style.visibility = "hidden";
-                document.getElementById("dtext1").style.visibility = "hidden";
-            }, Number(tmpobj.getinput(1) * 1000));
-            console.info("passed it");
-            break;
+	           document.getElementById("dtext1").style.visibility = "hidden";
+                runnext(tmpobj);
+            }, Number(tmpobj.getinput(1) * 1000 + 1));
+        break;
         case 7:
             var audio
             if (tmpobj.getinput() == "pop") {
@@ -128,37 +130,42 @@ function runcode() {
                 audio = new Audio('res/beep.m4a');
             }
             audio.play();
-            break;
+            setTimeout(function(){ runnext(tmpobj); }, 3);
+        break;
         case 8:
             movetype = tmpobj.getinput();           
             fixrect();
-            break;
+            setTimeout(function(){ runnext(tmpobj); }, 3);
+        break;
         case 9:
             if(sprtarget.id == "circle") {
-                setatt(sprtarget, "cy", Number(sprtarget.getAttribute("cy")) + Number(tmpobj.getinput()));
+            setatt(sprtarget, "cy", Number(sprtarget.getAttribute("cy")) + Number(tmpobj.getinput()));
             } else if (sprtarget.id == "rect") {
-                setatt(sprtarget, "y", Number(sprtarget.getAttribute("y")) + Number(tmpobj.getinput()));
+            setatt(sprtarget, "y", Number(sprtarget.getAttribute("y")) + Number(tmpobj.getinput()));
             }
             y += Number(tmpobj.getinput());
-            updatesaycheck(); 
-            break;
-    }
+            updatesaycheck();
+            setTimeout(function(){ runnext(tmpobj); }, 3);
+        break;
+	}
 }
 
+
+
 function spritesay(input){
-    if($.inArray(sprid, sprsay) === -1){
+    if($.inArray(sprid, sprsay) === false){
         sprsay.push(sprid);
     }
-    updatesaypos();
+	updatesaypos();
     //if the text is longer than min length extend length
-    if (input.length > 10) {
-        document.getElementById("dtext").setAttribute("width", 130 + (input.length - 10) * 10.5);
-    }
+	if (input.length > 10) {
+		document.getElementById("dtext").setAttribute("width", 130 + (input.length - 10) * 10.5);
+	}
     //set text to block text
-    document.getElementById("dtext1").innerHTML = input;
-    //show element
-    document.getElementById("dtext").style.visibility = "visible";
-    document.getElementById("dtext1").style.visibility = "visible";
+	document.getElementById("dtext1").innerHTML = input;
+	//show element
+	document.getElementById("dtext").style.visibility = "visible";
+	document.getElementById("dtext1").style.visibility = "visible";
 }
 
 function updatesaypos(){
@@ -167,10 +174,10 @@ function updatesaypos(){
         r = Number(sprtarget.getAttribute("r"));
         x = Number(sprtarget.getAttribute("cx")) + r;
         y = Number(sprtarget.getAttribute("cy")) - r;
-    } else if (sprtarget.id == "rect") {
+	} else if (sprtarget.id == "rect") {
         x = Number(sprtarget.getAttribute("x")) + Number(sprtarget.getAttribute("width"));
         y = Number(sprtarget.getAttribute("y"));
-    }
+	}
     setatt(document.getElementById("dtext"), "transform", "translate("+ x +","+ y +")");
     setatt(document.getElementById("dtext1"), "transform", "translate("+ x +","+ y +")");
 }
@@ -178,14 +185,14 @@ function setatt(target, att, set){
     target.setAttribute(att, set);
 }
 function updatesaycheck(){
-    if($.inArray(sprid, sprsay) != -1){
+    if($.inArray(sprid, sprsay)){
         updatesaypos();
     }
 }
 function refresh(){
     gameplayer = document.getElementById("scratchWindow");
-    sprites = gameplayer.getElementsByClassName("sprite");
-    sprtarget = sprites[sprid];
+	sprites = gameplayer.getElementsByClassName("sprite");
+	sprtarget = sprites[sprid];
 }
 function fixrect () {
     if (sprtarget.id == "rect") {
