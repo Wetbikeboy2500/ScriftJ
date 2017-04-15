@@ -8,15 +8,14 @@ going to have to improve elements's prototype before shortening the rest of the 
 function createblock (target) {
     let type = target.type, id = target.id, x = target.x, y = target.y, color = target.color, value = target.value, value1 = target.value1;
     console.log("Creating Element " + id + " with the color " + color);
-	para = document.createElementNS("http://www.w3.org/2000/svg","g");
-    addatt("class", "bl", para);
-    fixg(id, x, y);
+    para = create_element().NS("g").att("class", "bl").att("id", id).att("transform", "translate("+ x +","+ y +")");
 	main = document.getElementById("normalBlocks");
 	switch (type) {
 	case 0://start
-            addatt("onmousedown", 'moveblock(obj[' + id + '])', para);
-            create_element().element_ns("polygon").attribute("points", "0,0 150,0 150,30 0,30").attribute("style", "fill:"+ color +";fill-rule:evenodd;").append(para);
-        main.appendChild(para);
+        para.att("onmousedown", 'moveblock(obj[' + id + '])');
+        cara = create_element().NS("polygon").att("points", "0,0 150,0 150,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
+        para.dom.appendChild(cara.dom)
+        main.appendChild(para.dom);
 		break;
 	case 1://say
         createinputblock(x, y, 108, "Say:", "text", id, color, value);
@@ -25,19 +24,20 @@ function createblock (target) {
         createinputblock(x, y, 98, "Move:", "number", id, color, value);
 		break;
 	case 3: //look block
-		cara = document.createElementNS("http://www.w3.org/2000/svg","g");
-            addatt("onmousedown", 'moveblock(obj[' + id + '])', cara);
-            create_element().element_ns("polygon").attribute("points", "0,0 115,0 115,15 110,15 110,5 45,5 45,25 110,25 110,15 115,15 115,30 0,30").attribute("style", "fill:"+ color +";fill-rule:evenodd;").append(cara);
-            fara = create_element().element_ns("text").attribute("x", "2").attribute("y", "20").attribute("fill", "white").dom;
-            fara.appendChild(document.createTextNode("Look:"));
-		  cara.appendChild(fara);
-        para.appendChild(cara);
-        cara = document.createElementNS("http://www.w3.org/2000/svg","foreignObject");
-            addattNS("width", "65", cara);
-            addattNS("height", "20", cara);
-            addattNS("x", "45", cara);
-            addattNS("y", "5", cara);
-        fara = document.createElement("select");
+        //create svg element
+        cara = create_element().NS("g").att("onmousedown", 'moveblock(obj[' + id + '])');
+            fara = create_element().NS("polygon").att("points", "0,0 115,0 115,15 110,15 110,5 45,5 45,25 110,25 110,15 115,15 115,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
+        cara.dom.appendChild(fara.dom);
+            fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
+            fara.dom.appendChild(document.createTextNode("Look:"));
+		  cara.dom.appendChild(fara.dom);
+        para.dom.appendChild(cara.dom);
+        //now add foreign object to svg
+        cara = create_element().NS("foreignObject").att("width", "65").att("height", "20").att("x", "45").att("y", "5");
+        
+        fara = create_element().default("select").att("style", "width:65px;height:20px;").att("onchange", "input(this, 0)").att("id", 'text' + id).option("red", "Red").option("blue", "Blue").option("green", "Green").option("yellow", "Yellow").att("value", value);
+        
+        /*fara = document.createElement("select");
             addatt("style", "width:65px;height:20px;", fara);
             addatt("onchange", "input(this, 0)", fara);
             addatt("id", 'text' + id, fara);
@@ -45,10 +45,10 @@ function createblock (target) {
                 createoption("blue", "Blue");
                 createoption("green", "Green");
                 createoption("yellow", "Yellow");
-            addatt("value", value, fara);
-        cara.appendChild(fara);
-        para.appendChild(cara);
-        main.appendChild(para);
+            addatt("value", value, fara);*/
+        cara.dom.appendChild(fara.dom);
+        para.dom.appendChild(cara.dom);
+        main.appendChild(para.dom);
 		break;
     case 4://Shape block
 		cara = document.createElementNS("http://www.w3.org/2000/svg","g");
@@ -154,7 +154,7 @@ main.appendChild(para);
             node = document.createTextNode("Sound:");
 		    fara.appendChild(node);
 		  cara.appendChild(fara);
-        para.appendChild(cara);
+        para.dom.appendChild(cara);
         cara = document.createElementNS("http://www.w3.org/2000/svg","foreignObject");
             addattNS("width", "55", cara);
             addattNS("height", "20", cara);
@@ -169,8 +169,8 @@ main.appendChild(para);
                 createoption("beep", "Beep");
             addatt("value", value, fara);
         cara.appendChild(fara);
-        para.appendChild(cara);
-        main.appendChild(para);
+        para.dom.appendChild(cara);
+        main.appendChild(para.dom);
         break;
         case 8://rotation block
             createinputblock(x, y, 82, "Rotation:", "number", id, color, value);
@@ -218,10 +218,6 @@ function addattNS(att1, att2, target){
     var a = document.createAttributeNS(null,att1);
     a.value = att2;
     target.setAttributeNode(a);
-}
-function fixg(id, x, y){
-    addatt("id", id, para);
-    addatt("transform", "translate("+ x +","+ y +")", para);
 }
 function createinputblock(x, y, w, text, type, id, color, value){
 main = document.getElementById("normalBlocks");
