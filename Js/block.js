@@ -30,6 +30,12 @@ class block {
         } else if (purple.includes(type)) {
             this.color = "#9900cc";
         }
+        
+        if (type === 3) {
+            this.value = "red";
+        } else if (type === 7) {
+            this.value = "pop";
+        }
         createblock(this);
     }
     

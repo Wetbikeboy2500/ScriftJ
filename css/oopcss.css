@@ -43,7 +43,9 @@ input{
     -webkit-user-select: all; 
     -moz-user-select: all;
     -ms-user-select: all;
-    user-select: all; 
+    user-select: all;
+    padding: 0px;
+    height: 19px;
 }
 textarea:focus, input:focus{
     pointer-events:none;

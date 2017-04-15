@@ -5,9 +5,10 @@ function  init_run () {
     compile_array = [];
     log("initiate run");
     //fill the sprites array with needed info
-    arrayForEach(get_sprites(), (a, i)=>{
+    get_sprites().forEach((a, i) => {
         sprites[i] = a.group;
     });
+    
     for (let i = 0; i < sprites.length; i++) {
         run_array[i] = sprites[i].filter((a) => {
             return a != 0 && a[0].type === 0 && a.length > 1;
@@ -26,7 +27,7 @@ function  init_run () {
     }
     log(compile_array);
     reset();
-    run_next();
+    run_next(0);
 }
 //now it just needs to run through the blocks in the array
 function reset() {
@@ -34,36 +35,54 @@ function reset() {
     arr_pos = 0;
 }
 
-function run_next () {
+function run_next (delay) {
     if (run_pos < compile_array[arr_pos].length && compile_array[arr_pos].length > 0) {//first check to see if there is anything left to run
-        run(compile_array[arr_pos][run_pos]);
+        window.setTimeout(() => {run(compile_array[arr_pos][run_pos]);}, delay);
     } else {
         arr_pos += 1;
         if (arr_pos >= compile_array.length) {
             log("Finished Running");
         } else {
             run_pos = 0;
-            run_next();
+            run_next(0);
         }
     }
 }
 
-function run (a) {
+function run (a) {//need to add new blocks and change how other blocks work
+    let delay = 0;
     log("Block " + a.id + " with " + a.getinput(0) + " for sprite " + arr_pos);
     switch (a.type) {
         case 1: 
             if (/\S/.test(a.getinput(0))) {
-                log("say " + a.getinput(0));
+                log("say " + a.getinput(0));//need to mkae text box appear near sprite
             }
+            delay = 0;
             break;
-        case 2: 
+        case 2:
+        case 5:
             if (/\S/.test(a.getinput(0))) {
-                log("run move " + a.getinput(0));
                 get_sprites()[arr_pos].translate(a.getinput(0)).update_transform();
             }
+            delay = 0;
+            break;
+        case 3:
+            get_sprites()[arr_pos].change_fill(a.getinput(0));
+            delay = 0;
+            break;
+        case 9:
+            if (/\S/.test(a.getinput(0))) {
+                get_sprites()[arr_pos].translate(0, a.getinput(0)).update_transform();
+            }
+            delay = 0;
+            break;
+        case 8:
+            get_sprites()[arr_pos].set_rotation(a.getinput(0)).update_transform();
+            break
+        default:
+            log("Unknown Block Type");
             break;
     }
-    //this is where the blocks will go to run in the code
     run_pos += 1;
-    run_next();//we can put a varible delay on this
+    run_next(delay);//we can put a varible delay on this
 }
