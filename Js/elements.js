@@ -1,22 +1,25 @@
 class _ce {
-    
-    element (a) {
+    //normal element
+    default (a) {
         this.dom = document.createElement(a);
         return this;
     }
-    
-    element_ns (a) {
+    //elements with a name space
+    NS (a) {
         this.dom = document.createElementNS("http://www.w3.org/2000/svg",a);
         return this;
     }
-    
-    attribute (a, value) {
+    //sets attributes
+    att (a, value) {
         this.dom.setAttribute(a, value);
         return this;
     }
-    
-    append (a) {
-        a.append(this.dom);
+    option (input, name) {
+        let a = document.createElement("option");
+        a.setAttribute("value", input);
+        let b = document.createTextNode(name);
+        a.appendChild(b);
+        this.dom.appendChild(a);
         return this;
     }
 }

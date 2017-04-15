@@ -15,7 +15,7 @@ window.onmouseup = function () {
     //clear moving array and the objects being moved
     info("Mouse up");
     if (moving.length > 0) {
-        arrayForEach(moving, function (a, i) {
+        moving.forEach((a) => {
             a.stop();
         });
         //this is where it looks for connections to other blocks
