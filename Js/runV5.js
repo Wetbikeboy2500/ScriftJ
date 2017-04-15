@@ -26,7 +26,7 @@ function  init_run () {
     }
     log(compile_array);
     reset();
-    run_next();
+    run_next(0);
 }
 //now it just needs to run through the blocks in the array
 function reset() {
@@ -34,27 +34,29 @@ function reset() {
     arr_pos = 0;
 }
 
-function run_next () {
+function run_next (delay) {
     if (run_pos < compile_array[arr_pos].length && compile_array[arr_pos].length > 0) {//first check to see if there is anything left to run
-        run(compile_array[arr_pos][run_pos]);
+        window.setTimeout(run(compile_array[arr_pos][run_pos]), delay);
     } else {
         arr_pos += 1;
         if (arr_pos >= compile_array.length) {
             log("Finished Running");
         } else {
             run_pos = 0;
-            run_next();
+            run_next(0);
         }
     }
 }
 
 function run (a) {
+    let delay = 0;//delay between block that by defult is 0
     log("Block " + a.id + " with " + a.getinput(0) + " for sprite " + arr_pos);
     switch (a.type) {
         case 1: 
             if (/\S/.test(a.getinput(0))) {
                 log("say " + a.getinput(0));
             }
+            delay = 50;//this is just to test it
             break;
         case 2: 
             if (/\S/.test(a.getinput(0))) {
@@ -63,7 +65,6 @@ function run (a) {
             }
             break;
     }
-    //this is where the blocks will go to run in the code
     run_pos += 1;
-    run_next();//we can put a varible delay on this
+    run_next(delay);//we can put a varible delay on this
 }
