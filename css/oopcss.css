@@ -1,0 +1,136 @@
+/*coding tab css*/
+.block{
+    position: absolute;
+    left: 10px;
+    width: 130px;
+    height: 30px;
+    border-radius: 5px; 
+}
+#dtext, #dtext1 {
+    visibility: hidden;
+}
+#scratchWindow {
+    position: absolute;
+    left: 10px;
+    top: 50px;
+}
+#spriteWindow {
+    position: absolute;
+    left: 10px;
+    top: 420px;
+}
+#editorWindow{
+    background-color: #DDDDDD;
+    position: absolute;
+    left: 507px;
+    top: 50px;
+    height: 98%;
+    width: calc(100% - 507px);
+}
+svg {
+    border:1px solid #c3c3c3;
+}
+body{
+    margin: 0;
+    overflow: hidden;
+    cursor:context-menu;
+    -webkit-user-select: none; 
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;   
+}
+input{
+    -webkit-user-select: all; 
+    -moz-user-select: all;
+    -ms-user-select: all;
+    user-select: all; 
+}
+textarea:focus, input:focus{
+    pointer-events:none;
+    outline: 0;
+}
+#input{
+    position: relative;
+    bottom: 10px;
+    left: 2px;
+    color: #FFFFFF;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; 
+}
+.button{
+    text-decoration: none;
+    display: inline-block;
+    position: absolute;
+    height: 50px;
+    border-right-color: #F1F1F1;
+    border-left-color: #F1F1F1;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    -webkit-animation-name: ex2; 
+    -webkit-animation-duration: 0.5s;
+    animation-name: ex2;
+    animation-duration: 0.5s;
+}
+#homebutton{
+    left: 80px;
+    width: 80px;
+}
+#navbar{
+    position: absolute;
+    top: 0px;
+    left: 0px; 
+    height: 50px;
+    font-family:courier;
+    width: 100%;
+    background-color: #00BAFF;
+}
+#spriteselect{
+    position: absolute;
+    left: 10px;
+    top: 435px;
+}
+.button:hover{
+    -webkit-animation-name: ex1; 
+    -webkit-animation-duration: 0.5s;
+    animation-name: ex1;
+    animation-duration: 0.5s;
+}
+.button:hover{
+    background-color: #0c9ce4;
+}
+@keyframes ex1 {
+	0%	{background-color: #25aff4;}
+	100%	{background-color: #0c9ce4;}
+}
+@keyframes ex2 {
+	0%	{background-color: #0c9ce4;}
+	100%	{background-color: #25aff4;}
+}
+.button p {
+    text-align: center;
+    color: #fff;
+}
+#videos {
+    left: 172px;
+    width: 80px;
+}
+#runCode {
+    left: 507px;
+    width: 90px;
+}
+#saveFile {
+    left: 607px;
+    width: 50px;
+}
+#loadFile {
+    left: 667px;
+    width: 50px;
+}
+.button {
+    cursor: pointer;
+}
