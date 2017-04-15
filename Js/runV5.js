@@ -37,7 +37,7 @@ function reset() {
 
 function run_next (delay) {
     if (run_pos < compile_array[arr_pos].length && compile_array[arr_pos].length > 0) {//first check to see if there is anything left to run
-        window.setTimeout(run(compile_array[arr_pos][run_pos]), delay);
+        window.setTimeout(() => {run(compile_array[arr_pos][run_pos]);}, delay);
     } else {
         arr_pos += 1;
         if (arr_pos >= compile_array.length) {
@@ -49,21 +49,38 @@ function run_next (delay) {
     }
 }
 
-function run (a) {
-    let delay = 0;//delay between block that by defult is 0
+function run (a) {//need to add new blocks and change how other blocks work
+    let delay = 0;
     log("Block " + a.id + " with " + a.getinput(0) + " for sprite " + arr_pos);
     switch (a.type) {
         case 1: 
             if (/\S/.test(a.getinput(0))) {
-                log("say " + a.getinput(0));
+                log("say " + a.getinput(0));//need to mkae text box appear near sprite
             }
-            delay = 50;//this is just to test it
+            delay = 0;
             break;
-        case 2: 
+        case 2:
+        case 5:
             if (/\S/.test(a.getinput(0))) {
-                log("run move " + a.getinput(0));
                 get_sprites()[arr_pos].translate(a.getinput(0)).update_transform();
             }
+            delay = 0;
+            break;
+        case 3:
+            get_sprites()[arr_pos].change_fill(a.getinput(0));
+            delay = 0;
+            break;
+        case 9:
+            if (/\S/.test(a.getinput(0))) {
+                get_sprites()[arr_pos].translate(0, a.getinput(0)).update_transform();
+            }
+            delay = 0;
+            break;
+        case 8:
+            get_sprites()[arr_pos].set_rotation(a.getinput(0)).update_transform();
+            break
+        default:
+            log("Unknown Block Type");
             break;
     }
     run_pos += 1;

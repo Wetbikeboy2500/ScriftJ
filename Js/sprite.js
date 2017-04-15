@@ -20,6 +20,10 @@ class sprite {
         this.rotation = parseInt(r);
         return this;
     }
+    change_fill (c = "#000") {
+        document.getElementById("s" + this.id).setAttribute("style", "fill:" + c +"; fill-rule:evenodd;");
+        return this;
+    }
     translate (x = 0, y = 0) {
         this.x += parseInt(x);
         this.y += parseInt(y);
