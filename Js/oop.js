@@ -58,9 +58,6 @@ window.onmouseup = function () {
 };
 
 function switch_sprite (spr) {//this is in charge of switch sprites and making sure everything is loaded and render aka extremy important
-    /*
-    this is also currently very unsecure and could break many things when switch sprites while doing other things
-    */
     if (spr !== current_sprite) {
         log("switch sprite");
         current_sprite.group = groups;
@@ -109,9 +106,7 @@ function clear_moving () {
     moving = [];
 }
 function run_moving () {//this is an extremley important function for the movement
-    moving.forEach((a) => {
-        a.move();
-    });
+    moving.forEach((a) => { a.move(); });
 }
 function check_connect (a) {
     let can_connect = false;
