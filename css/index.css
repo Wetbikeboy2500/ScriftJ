@@ -1,0 +1,123 @@
+/*mainpage css */
+*{
+font-family:courier;
+cursor:default;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+body{
+margin: 0;
+}
+#navbar{
+position: absolute;
+top: 0px;
+width: 100%;
+height: 50px;/*if 1920x1080 this can be 5%*/
+background-color: #00BAFF;
+}
+#button1{
+left: 80px;
+display: inline-block;
+position: relative;
+height: 50px;
+width: 80px;
+border-right-color: #F1F1F1;
+border-left-color: #F1F1F1;
+border-left-style: solid;
+border-right-style: solid;
+border-left-width: 1px;
+border-right-width: 1px;
+-webkit-animation-name: ex2; 
+-webkit-animation-duration: 0.5s;
+animation-name: ex2;
+animation-duration: 0.5s;
+}
+#infobox{
+border-radius: 10px;
+background-color: #F1F1F1;
+width: 330px;
+height: 300px;
+padding: 0px 20px 0px 0px;
+    position: relative;
+    bottom: 25px;
+    display: inline-block;
+}
+#infocenter{
+    position: absolute;
+    top: 60px;
+    min-width: 325px;
+    padding: 5px;
+}
+#updatelog{
+border-radius: 10px;
+position: absolute;
+top: 370px;
+background-color: #F1F1F1;
+width: 600px;
+height: 300px;
+padding: 0px 20px 0px 0px;
+}
+#h1{
+position: relative;
+left: 10px;
+padding: 4px 4px 4px 4px;
+}
+a{
+color: #25aff4;
+text-decoration: none;
+}
+a:hover{
+-webkit-animation-name: ex3; 
+-webkit-animation-duration: 0.5s;
+animation-name: ex3;
+animation-duration: 0.5s;
+}
+a:hover{
+color: #0080BC;
+}
+footer{
+    border-top-color: #F1F1F1;
+    border-top-style: solid;
+    border-top-width: 1px;
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    display: block;
+}
+#button1:hover{
+-webkit-animation-name: ex1; 
+-webkit-animation-duration: 0.5s;
+animation-name: ex1;
+animation-duration: 0.5s;
+}
+#button1:hover{
+background-color: #0c9ce4;
+}
+h2, h3{
+    text-align: center;
+}
+@keyframes ex1 {
+	0%	{background-color: #25aff4;}
+	100%	{background-color: #0c9ce4;}
+}
+@keyframes ex2 {
+	0%	{background-color: #0c9ce4;}
+	100%	{background-color: #25aff4;}
+}
+@keyframes ex3 {
+	0%	{color: #25aff4;}
+	100%	{color: #0080BC;}
+}
+.button p {
+    text-align: center;
+    color: #fff;
+}
+.button {
+    cursor: pointer;
+}
