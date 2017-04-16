@@ -91,7 +91,9 @@ function run (a) {//need to add new blocks and change how other blocks work
             delay = 0;
             break;
         case 8:
-            get_sprites()[arr_pos].set_rotation(a.getinput(0)).update_transform();
+            if (/\S/.test(a.getinput(0))) {
+                get_sprites()[arr_pos].set_rotation(a.getinput(0)).update_transform();
+            }
             break
         default:
             log("Unknown Block Type");
