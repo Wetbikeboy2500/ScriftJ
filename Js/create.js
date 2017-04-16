@@ -77,7 +77,7 @@ function createblock (target) {
             para.dom.appendChild(cara.dom);
             //second foreign
             cara = create_element().NS("foreignObject").att("width", "26").att("height", "20").att("x", "115").att("y", "5");
-                fara = create_element.default("input").att("style", "width:26px;").att("id", '1text' + id).att("type", "number").att("name", "input").att("onchange", "input(this, 1)").att("value", value1);
+                fara = create_element().default("input").att("style", "width:26px;").att("id", '1text' + id).att("type", "number").att("name", "input").att("onchange", "input(this, 1)").att("value", value1);
             cara.dom.appendChild(fara.dom);
             para.dom.appendChild(cara.dom);
             main.appendChild(para.dom); 
@@ -91,7 +91,7 @@ function createblock (target) {
             cara.dom.appendChild(fara.dom);
             para.dom.appendChild(cara.dom);
             
-            cara = create_element.NS("foreignObject").att("width", "55").att("height", "20").att("x", "47").att("y", "5");
+            cara = create_element().NS("foreignObject").att("width", "55").att("height", "20").att("x", "47").att("y", "5");
                 fara = create_element().default("select").att("style", "width:55px;height:20px;").att("onchange", "input(this, 0)").att("id", 'text' + id).option("pop", "Pop").option("click", "Click").option("beep", "Beep").select(value);
             cara.dom.appendChild(fara.dom);
             para.dom.appendChild(cara.dom);
@@ -137,11 +137,8 @@ main.appendChild(para.dom);
 function create_sprite (p, f, id) {
     //add in the stuff here
     let player = document.getElementById("stagesprites");
-        let sprite = document.createElementNS("http://www.w3.org/2000/svg","polygon");
-            addatt("points", p, sprite);
-            addatt("style", "fill:" + f +"; fill-rule:evenodd;", sprite);
-            addatt("id", id, sprite);
-    player.appendChild(sprite);
+        let sprite = create_element().NS("polygon").att("points", p).att("style", "fill:" + f +"; fill-rule:evenodd;").att("id", id);
+    player.appendChild(sprite.dom);
 }
 
 function select_sprite (spr) {
