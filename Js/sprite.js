@@ -15,13 +15,20 @@ class sprite {
         this.rotation = 0;
         //function to create sprite on canvas
         create_sprite(this.svg_points, this.fill, "s" + this.id);
+        this.width = document.getElementById("s" + this.id).getBoundingClientRect().width;
+        this.height = document.getElementById("s" + this.id).getBoundingClientRect().height;
     }
     set_rotation (r = 0) { //finish this later
         this.rotation = parseInt(r);
         return this;
     }
+    add_rotation (r = 0) {
+        this.rotation += parseInt(r);
+        return this;
+    }
     change_fill (c = "#000") {
         document.getElementById("s" + this.id).setAttribute("style", "fill:" + c +"; fill-rule:evenodd;");
+        this.fill = c;
         return this;
     }
     translate (x = 0, y = 0) {
@@ -36,5 +43,20 @@ class sprite {
     }
     update_group (group) {
         this.group = group;
+    }
+    change_points(a, w, h) {
+        this.svg_points = a;
+        document.getElementById("s" + this.id).setAttribute("points", a);
+        this.set_width(w);
+        this.set_height(h);
+        return this;
+    }
+    set_width (a) {
+        this.width = a;
+        return this;
+    }
+    set_height (a) {
+        this.height = a;
+        return this;
     }
 }

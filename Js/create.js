@@ -49,7 +49,7 @@ function createblock (target) {
             para.dom.appendChild(cara.dom);
 
             cara = create_element().NS("foreignObject").att("width", "85").att("height", "20").att("x", "45").att("y", "5");
-                fara = create_element().default("select").att("style", "width:85px;height:20px;").att("onchange", "input(this, 0)").att("id", 'text' + id).option("squar", "Square").option("rect", "Rectangle").select(value);
+                fara = create_element().default("select").att("style", "width:85px;height:20px;").att("onchange", "input(this, 0)").att("id", 'text' + id).option("squr", "Square").option("rect", "Rectangle").select(value);
             cara.dom.appendChild(fara.dom);
             para.dom.appendChild(cara.dom);
             main.appendChild(para.dom);
