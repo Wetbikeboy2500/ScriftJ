@@ -45,6 +45,7 @@ input{
     -ms-user-select: all;
     user-select: all;
     padding: 0px;
+    border-width: 1px;
     height: 19px;
 }
 textarea:focus, input:focus{
