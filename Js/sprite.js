@@ -38,7 +38,7 @@ class sprite {
     }
     update_transform () {
         console.log(this.x, this.y);
-        document.getElementById("s" + this.id).setAttribute("transform", "translate (" + this.x + " " + this.y + ") rotate (" + this.rotation + " " + this.x + " " + this.y + ")");
+        document.getElementById("s" + this.id).setAttribute("transform", "translate ("+ this.x +" "+ this.y +") rotate (" + this.rotation + " " + this.x + " " + this.y + ")");
         return this;
     }
     update_group (group) {
@@ -57,6 +57,14 @@ class sprite {
     }
     set_height (a) {
         this.height = a;
+        return this;
+    }
+    set_x (a) {
+        this.x = a;
+        return this;
+    }
+    set_y (a) {
+        this.y = a;
         return this;
     }
 }

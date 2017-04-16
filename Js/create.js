@@ -21,7 +21,7 @@ function createblock (target) {
             createinputblock(x, y, 108, "Say:", "text", id, color, value);
             break;
         case 2://move
-            createinputblock(x, y, 98, "Move:", "number", id, color, value);
+            createinputblock(x, y, 95, "Rotate:", "number", id, color, value);
             break;
         case 3: //look block
             //create svg element
@@ -113,6 +113,15 @@ function createblock (target) {
                 main = document.getElementById("topBlocks");
             main.appendChild(para.dom);
             break;
+        case 11:
+            createinputblock(x, y, 103, "Set x:", "number", id, color, value);
+            break;
+        case 12:
+            createinputblock(x, y, 103, "Set y:", "number", id, color, value);
+            break;
+        default:
+            log("Unknown Block Type");
+            break;
 	}
 
 }
@@ -125,6 +134,8 @@ main = document.getElementById("normalBlocks");
         cara.dom.appendChild(fara.dom);
             fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
             fara.dom.appendChild(document.createTextNode(text));
+            log(fara.dom.childNodes[0].clientWidth);
+            log(fara.dom);
         cara.dom.appendChild(fara.dom);
     para.dom.appendChild(cara.dom);
         cara = create_element().NS("foreignObject").att("width", w).att("height", "21").att("x", 143 - w).att("y", "5");
