@@ -35,6 +35,8 @@ class block {
             this.value = "red";
         } else if (type === 7) {
             this.value = "pop";
+        } else if (type === 4) {
+            this.value = "squr";
         }
         createblock(this);
     }

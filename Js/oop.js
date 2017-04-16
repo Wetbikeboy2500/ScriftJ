@@ -139,7 +139,7 @@ function get_sprites () {
 function input (obj1, a) {
     if (a == 0) {
         obj[obj1.id.substring(4, obj1.id.length)].value = document.getElementById(obj1.id).value;
-    } else if (a == 3) {
+    } else if (a == 1) {
         obj[obj1.id.substring(5, obj1.id.length)].value1 = document.getElementById(obj1.id).value;
     } else {
         log("Don't support that number");

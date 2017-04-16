@@ -11,259 +11,134 @@ function createblock (target) {
     para = create_element().NS("g").att("class", "bl").att("id", id).att("transform", "translate("+ x +","+ y +")");
 	main = document.getElementById("normalBlocks");
 	switch (type) {
-	case 0://start
-        para.att("onmousedown", 'moveblock(obj[' + id + '])');
-        cara = create_element().NS("polygon").att("points", "0,0 150,0 150,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
-        para.dom.appendChild(cara.dom)
-        main.appendChild(para.dom);
-		break;
-	case 1://say
-        createinputblock(x, y, 108, "Say:", "text", id, color, value);
-		break;
-	case 2://move
-        createinputblock(x, y, 98, "Move:", "number", id, color, value);
-		break;
-	case 3: //look block
-        //create svg element
-        cara = create_element().NS("g").att("onmousedown", 'moveblock(obj[' + id + '])');
-            fara = create_element().NS("polygon").att("points", "0,0 115,0 115,15 110,15 110,5 45,5 45,25 110,25 110,15 115,15 115,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
-        cara.dom.appendChild(fara.dom);
-            fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
-            fara.dom.appendChild(document.createTextNode("Look:"));
-		  cara.dom.appendChild(fara.dom);
-        para.dom.appendChild(cara.dom);
-        //now add foreign object to svg
-        cara = create_element().NS("foreignObject").att("width", "65").att("height", "20").att("x", "45").att("y", "5");
-        
-        fara = create_element().default("select").att("style", "width:65px;height:20px;").att("onchange", "input(this, 0)").att("id", 'text' + id).option("red", "Red").option("blue", "Blue").option("green", "Green").option("yellow", "Yellow").att("value", value);
-        
-        /*fara = document.createElement("select");
-            addatt("style", "width:65px;height:20px;", fara);
-            addatt("onchange", "input(this, 0)", fara);
-            addatt("id", 'text' + id, fara);
-                createoption("red", "Red");
-                createoption("blue", "Blue");
-                createoption("green", "Green");
-                createoption("yellow", "Yellow");
-            addatt("value", value, fara);*/
-        cara.dom.appendChild(fara.dom);
-        para.dom.appendChild(cara.dom);
-        main.appendChild(para.dom);
-		break;
-    case 4://Shape block
-		cara = document.createElementNS("http://www.w3.org/2000/svg","g");
-            addatt("onmousedown", 'moveblock(obj[' + id + '])', cara);
-        fara = document.createElementNS("http://www.w3.org/2000/svg","polygon");
-            addatt("points", "0,0 135,0 135,15 130,15 130,5 45,5 45,25 130,25 130,15 135,15 135,30 0,30", fara);
-            addatt("style", "fill:"+ color +";fill-rule:evenodd;", fara);
-		  cara.appendChild(fara);
-        fara = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            addatt("x", "2", fara);
-            addatt("y", "20", fara);
-            addatt("fill", "white", fara);
-            node = document.createTextNode("Shape:");
-		    fara.appendChild(node);
-		  cara.appendChild(fara);
-        para.appendChild(cara);
-        cara = document.createElementNS("http://www.w3.org/2000/svg","foreignObject");
-            addattNS("width", "85", cara);
-            addattNS("height", "20", cara);
-            addattNS("x", "45", cara);
-            addattNS("y", "5", cara);
-        fara = document.createElement("select");
-            addatt("style", "width:85px;height:20px;", fara);
-            addatt("onchange", "input(this, 0)", fara);
-            addatt("id", 'text' + id, fara);
-                createoption("circle", "Circle");
-                createoption("rectangle", "Rectangle");
-            addatt("value", value, fara);
-        cara.appendChild(fara);
-        para.dom.appendChild(cara);
-        main.appendChild(para.dom);
-		break;
-    case 5://Chane X Block
-        createinputblock(x, y, 73, "Change x:", "number", id, color, value);
-        break;
-    case 6://Say x for x Block
-        cara = document.createElementNS("http://www.w3.org/2000/svg","g");
-                addatt("onmousedown", 'moveblock(obj[' + id + '])', cara);
-            fara = document.createElementNS("http://www.w3.org/2000/svg","polygon");
-                addatt("points", "0,0 150,0 150,15 145,15 145,5 115,5 115,15 91,15 91,5 35,5 35,25 91,25 91,15 115,15 115,25 145,25 145,15 150,15 150,30 0,30", fara);
-                addatt("style", "fill:"+ color +";fill-rule:evenodd;", fara);
-              cara.appendChild(fara);
-            //say: block
-            fara = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                addatt("x", "2", fara);
-                addatt("y", "20", fara);
-                addatt("fill", "white", fara);
-                node = document.createTextNode("Say:");
-                fara.appendChild(node);
-              cara.appendChild(fara);
-            //for text
-            fara = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                addatt("x", "95", fara);
-                addatt("y", "20", fara);
-                addatt("fill", "white", fara);
-                node = document.createTextNode("for");
-                fara.appendChild(node);
-              cara.appendChild(fara);
-            para.dom.appendChild(cara);
-            //first foreign object
-            cara = document.createElementNS("http://www.w3.org/2000/svg","foreignObject");
-                addattNS("width", "53", cara);
-                addattNS("height", "20", cara);
-                addattNS("x", "35", cara);
-                addattNS("y", "5", cara);
-            fara = document.createElement("input");
-                addatt("style", "width:53px;", fara);
-                addatt("id", 'text' + id, fara);
-                addatt("type", "text", fara);
-                addatt("name", "input", fara);
-                addatt("onchange", "input(this, 0)", fara);
-                addatt("value", value, fara);
-            cara.appendChild(fara);
-        para.dom.appendChild(cara);
-        //second foreign
-        cara = document.createElementNS("http://www.w3.org/2000/svg","foreignObject");
-                addattNS("width", "26", cara);
-                addattNS("height", "20", cara);
-                addattNS("x", "115", cara);
-                addattNS("y", "5", cara);
-            fara = document.createElement("input");
-                addatt("style", "width:26px;", fara);
-                addatt("id", '1text' + id, fara);
-                addatt("type", "number", fara);
-                addatt("name", "input", fara);
-                addatt("onchange", "input(this, 1)", fara);
-                addatt("value", value1, fara);
-            cara.appendChild(fara);
-        para.dom.appendChild(cara);
-main.appendChild(para.dom); 
-        break;
-        case 7://sound block
-            cara = document.createElementNS("http://www.w3.org/2000/svg","g");
-            addatt("onmousedown", 'moveblock(obj[' + id + '])', cara);
-        fara = document.createElementNS("http://www.w3.org/2000/svg","polygon");
-            addatt("points", "0,0 105,0 105,15 100,15 100,5 48,5 48,25 100,25 100,15 105,15 105,30 0,30", fara);
-            addatt("style", "fill:"+ color +";fill-rule:evenodd;", fara);
-		  cara.appendChild(fara);
-        fara = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            addatt("x", "2", fara);
-            addatt("y", "20", fara);
-            addatt("fill", "white", fara);
-            node = document.createTextNode("Sound:");
-		    fara.appendChild(node);
-		  cara.appendChild(fara);
-        para.dom.appendChild(cara);
-        cara = document.createElementNS("http://www.w3.org/2000/svg","foreignObject");
-            addattNS("width", "55", cara);
-            addattNS("height", "20", cara);
-            addattNS("x", "47", cara);
-            addattNS("y", "5", cara);
-        fara = document.createElement("select");
-            addatt("style", "width:55px;height:20px;", fara);
-            addatt("onchange", "input(this, 0)", fara);
-            addatt("id", 'text' + id, fara);
-                createoption("pop", "Pop");
-                createoption("click", "Click");
-                createoption("beep", "Beep");
-            addatt("value", value, fara);
-        cara.appendChild(fara);
-        para.dom.appendChild(cara);
-        main.appendChild(para.dom);
-        break;
-        case 8://rotation block
-            createinputblock(x, y, 82, "Rotation:", "number", id, color, value);
-        break;
-        case 9://change y block
-            createinputblock(x, y, 73, "Change y:", "number", id, color, value);
-        break;
-        case 10://varible block
-                addatt("onmousedown", 'moveblock(obj[' + id + '])', para);
-            fara = document.createElementNS("http://www.w3.org/2000/svg","polygon");
-                addatt("points", "0,0 50,0 50,21 0,21", fara);
-                addatt("style", "fill:"+ color +";fill-rule:evenodd;", fara);
-              para.appendChild(fara);
-            fara = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                addatt("x", "2", fara);
-                addatt("y", "15", fara);
-                addatt("fill", "white", fara);
-                node = document.createTextNode("Varible");
-                fara.appendChild(node);
-            para.dom.appendChild(fara);
-            main = document.getElementById("topBlocks");
-        main.appendChild(para.dom);
-        break;
+        case 0://start
+            para.att("onmousedown", 'moveblock(obj[' + id + '])');
+            cara = create_element().NS("polygon").att("points", "0,0 150,0 150,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
+            para.dom.appendChild(cara.dom)
+            main.appendChild(para.dom);
+            break;
+        case 1://say
+            createinputblock(x, y, 108, "Say:", "text", id, color, value);
+            break;
+        case 2://move
+            createinputblock(x, y, 98, "Move:", "number", id, color, value);
+            break;
+        case 3: //look block
+            //create svg element
+            cara = create_element().NS("g").att("onmousedown", 'moveblock(obj[' + id + '])');
+                fara = create_element().NS("polygon").att("points", "0,0 115,0 115,15 110,15 110,5 45,5 45,25 110,25 110,15 115,15 115,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
+            cara.dom.appendChild(fara.dom);
+                fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
+                fara.dom.appendChild(document.createTextNode("Look:"));
+              cara.dom.appendChild(fara.dom);
+            para.dom.appendChild(cara.dom);
+
+            cara = create_element().NS("foreignObject").att("width", "65").att("height", "20").att("x", "45").att("y", "5");
+                fara = create_element().default("select").att("style", "width:65px;height:20px;").att("onchange", "input(this, 0)").att("id", 'text' + id).option("red", "Red").option("blue", "Blue").option("green", "Green").option("yellow", "Yellow").select(value);
+            cara.dom.appendChild(fara.dom);
+            para.dom.appendChild(cara.dom);
+            main.appendChild(para.dom);
+            break;
+        case 4://Shape block
+            cara = create_element().NS("g").att("onmousedown", 'moveblock(obj[' + id + '])');
+                fara = create_element().NS("polygon").att("points", "0,0 135,0 135,15 130,15 130,5 45,5 45,25 130,25 130,15 135,15 135,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
+            cara.dom.appendChild(fara.dom);
+                fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
+                fara.dom.appendChild(document.createTextNode("Shape:"));
+              cara.dom.appendChild(fara.dom);
+            para.dom.appendChild(cara.dom);
+
+            cara = create_element().NS("foreignObject").att("width", "85").att("height", "20").att("x", "45").att("y", "5");
+                fara = create_element().default("select").att("style", "width:85px;height:20px;").att("onchange", "input(this, 0)").att("id", 'text' + id).option("squr", "Square").option("rect", "Rectangle").select(value);
+            cara.dom.appendChild(fara.dom);
+            para.dom.appendChild(cara.dom);
+            main.appendChild(para.dom);
+            break;
+        case 5://Chane X Block
+            createinputblock(x, y, 73, "Change x:", "number", id, color, value);
+            break;
+        case 6://Say x for x Block
+            cara = create_element().NS("g").att("onmousedown", 'moveblock(obj[' + id + '])');
+                fara = create_element().NS("polygon").att("points", "0,0 150,0 150,15 145,15 145,5 115,5 115,15 91,15 91,5 35,5 35,25 91,25 91,15 115,15 115,25 145,25 145,15 150,15 150,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
+            cara.dom.appendChild(fara.dom);
+                //say:
+                fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
+                fara.dom.appendChild(document.createTextNode("Say:"));
+            cara.dom.appendChild(fara.dom);
+                //for text
+                fara = create_element().NS("text").att("x", "95").att("y", "20").att("fill", "white");
+                fara.dom.appendChild(document.createTextNode("for"));
+            cara.dom.appendChild(fara.dom);
+            para.dom.appendChild(cara.dom);
+                //first foreign object
+            cara = create_element().NS("foreignObject").att("width", "53").att("height", "20").att("x", "35").att("y", "5");
+                fara = create_element().default("input").att("style", "width:53px;").att("id", 'text' + id).att("type", "text").att("name", "input").att("onchange", "input(this, 0)").att("value", value);
+            cara.dom.appendChild(fara.dom);
+            para.dom.appendChild(cara.dom);
+            //second foreign
+            cara = create_element().NS("foreignObject").att("width", "26").att("height", "20").att("x", "115").att("y", "5");
+                fara = create_element().default("input").att("style", "width:26px;").att("id", '1text' + id).att("type", "number").att("name", "input").att("onchange", "input(this, 1)").att("value", value1);
+            cara.dom.appendChild(fara.dom);
+            para.dom.appendChild(cara.dom);
+            main.appendChild(para.dom); 
+            break;
+            case 7://sound block
+            cara = create_element().NS("g").att("onmousedown", 'moveblock(obj[' + id + '])');
+                fara = create_element().NS("polygon").att("points", "0,0 105,0 105,15 100,15 100,5 48,5 48,25 100,25 100,15 105,15 105,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
+            cara.dom.appendChild(fara.dom);
+                fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
+                fara.dom.appendChild(document.createTextNode("Sound"));
+            cara.dom.appendChild(fara.dom);
+            para.dom.appendChild(cara.dom);
+            
+            cara = create_element().NS("foreignObject").att("width", "55").att("height", "20").att("x", "47").att("y", "5");
+                fara = create_element().default("select").att("style", "width:55px;height:20px;").att("onchange", "input(this, 0)").att("id", 'text' + id).option("pop", "Pop").option("click", "Click").option("beep", "Beep").select(value);
+            cara.dom.appendChild(fara.dom);
+            para.dom.appendChild(cara.dom);
+            main.appendChild(para.dom);
+            break;
+            case 8://rotation block
+                createinputblock(x, y, 82, "Rotation:", "number", id, color, value);
+            break;
+            case 9://change y block
+                createinputblock(x, y, 73, "Change y:", "number", id, color, value);
+            break;
+            case 10://varible block
+                para.att("onmousedown", 'moveblock(obj[' + id + '])');
+                    fara = create_element().NS("polygon").att("points", "0,0 50,0 50,21 0,21").att("style", "fill:"+ color +";fill-rule:evenodd;");
+                para.dom.appendChild(fara.dom);
+                    fara = create_element().NS("text").att("x", "2").att("y", "15").att("fill", "white");
+                    fara.dom.appendChild(document.createTextNode("Varible"));
+                para.dom.appendChild(fara.dom);
+                main = document.getElementById("topBlocks");
+            main.appendChild(para.dom);
+            break;
 	}
 
 }
 
-function createoption(input, name){
-    //create a option for select
-    att = document.createElement("option"); //first option
-    //add value to option element
-    addatt("value", input, att);
-    //add text to option
-    node = document.createTextNode(name); //text
-    att.appendChild(node);
-    //add option to select
-    fara.appendChild(att);
-}
-function addatt(att1, att2, target){
-    var a = document.createAttribute(att1);
-    a.value = att2;
-    target.setAttributeNode(a);
-}
-function addattNS(att1, att2, target){
-    var a = document.createAttributeNS(null,att1);
-    a.value = att2;
-    target.setAttributeNode(a);
-}
 function createinputblock(x, y, w, text, type, id, color, value){
 main = document.getElementById("normalBlocks");
-    para = document.createElementNS("http://www.w3.org/2000/svg","g");
-        addatt("class", "bl", para);
-        addatt("id", id, para);
-        addatt("transform", "translate("+ x +","+ y +")", para);
-        cara = document.createElementNS("http://www.w3.org/2000/svg","g");
-                addatt("onmousedown", 'moveblock(obj[' + id + '])', cara);
-            fara = document.createElementNS("http://www.w3.org/2000/svg","polygon");
-                addatt("points", "0,0 150,0 150,15 145,15 145,5 "+(143 - w)+",5 "+(143 - w)+",25 145,25 145,15 150,15 150,30 0,30", fara);
-                addatt("style", "fill:"+ color +";fill-rule:evenodd;", fara);
-              cara.appendChild(fara);
-            fara = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                addatt("x", "2", fara);
-                addatt("y", "20", fara);
-                addatt("fill", "white", fara);
-                node = document.createTextNode(text);
-                fara.appendChild(node);
-              cara.appendChild(fara);
-            para.appendChild(cara);
-            cara = document.createElementNS("http://www.w3.org/2000/svg","foreignObject");
-                addattNS("width", w, cara);
-                addattNS("height", "21", cara);
-                addattNS("x", 143 - w, cara);
-                addattNS("y", "5", cara);
-            fara = document.createElement("input");
-                addatt("style", "width:"+w+"px;", fara);
-                addatt("id", 'text' + id, fara);
-                addatt("type", type, fara);
-                addatt("name", "input", fara);
-                fara.setAttribute("value", value);
-                addatt("onchange", "input(this, 0)", fara);
-            cara.appendChild(fara);
-        para.appendChild(cara);
-main.appendChild(para);
+    para = create_element().NS("g").att("class", "bl").att("id", id).att("transform", "translate("+ x +","+ y +")");
+        cara = create_element().NS("g").att("onmousedown", 'moveblock(obj[' + id + '])');
+            fara = create_element().NS("polygon").att("points", "0,0 150,0 150,15 145,15 145,5 "+(143 - w)+",5 "+(143 - w)+",25 145,25 145,15 150,15 150,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
+        cara.dom.appendChild(fara.dom);
+            fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
+            fara.dom.appendChild(document.createTextNode(text));
+        cara.dom.appendChild(fara.dom);
+    para.dom.appendChild(cara.dom);
+        cara = create_element().NS("foreignObject").att("width", w).att("height", "21").att("x", 143 - w).att("y", "5");
+            fara = create_element().default("input").att("style", "width:"+w+"px;").att("id", 'text' + id).att("type", type).att("name", "input").att("value", value).att("onchange", "input(this, 0)");
+        cara.dom.appendChild(fara.dom);
+    para.dom.appendChild(cara.dom);
+main.appendChild(para.dom);
 }
 
 function create_sprite (p, f, id) {
     //add in the stuff here
     let player = document.getElementById("stagesprites");
-        let sprite = document.createElementNS("http://www.w3.org/2000/svg","polygon");
-            addatt("points", p, sprite);
-            addatt("style", "fill:" + f +"; fill-rule:evenodd;", sprite);
-            addatt("id", id, sprite);
-    player.appendChild(sprite);
+        let sprite = create_element().NS("polygon").att("points", p).att("style", "fill:" + f +"; fill-rule:evenodd;").att("id", id);
+    player.appendChild(sprite.dom);
 }
 
 function select_sprite (spr) {
@@ -288,10 +163,6 @@ function reload_blocks (group) {
             for (let i2 = 0; i2 < new_group[i].length; i2++) {
                 createblock(new_group[i][i2]);
                 new_group[i][i2].set_dom();
-            }
-        }
-    }
-}               new_group[i][i2].set_dom();
             }
         }
     }

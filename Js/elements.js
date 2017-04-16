@@ -22,6 +22,16 @@ class _ce {
         this.dom.appendChild(a);
         return this;
     }
+    select (v) {
+        let a = this.dom.options, i;
+        for (i = 0; i < a.length; i++) {
+            if (a[i].value == v) {
+                a[i].selected = true;
+                break;
+            }
+        }
+        return this;
+    }
 }
 
 function create_element () {

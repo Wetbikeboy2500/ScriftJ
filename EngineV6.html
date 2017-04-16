@@ -9,7 +9,7 @@
         <script type="application/javascript" src="Js/block.js" async></script>
         <script type="application/javascript" src="Js/create.js" async></script>
         <script type="application/javascript" src="Js/oop.js" async></script>
-        <script type="application/javascript" src="Js/runV5.js" async></script>
+        <script type="application/javascript" src="Js/run.js" async></script>
         <script type="application/javascript" src="Js/Save_Load.js" async></script>
         <script type="application/javascript" src="Js/sprite.js" async></script>
         <script type="application/javascript" src="Js/elements.js" async></script>
@@ -84,7 +84,7 @@
                     </g>
                     <foreignObject width="100" height="20" x="45" y="5">
                         <select style="width:100px;height:20px;" name="input" disabled>
-                            <option value="red">Red</option>
+                            <option>Red</option>
                         </select>
                     </foreignObject>
                 </g>
@@ -96,7 +96,7 @@
                     </g>
                     <foreignObject width="100" height="20" x="45" y="5">
                         <select style="width:100px;height:20px;" name="input" disabled>
-                            <option value="circle">Circle</option>
+                            <option>Square</option>
                         </select>
                     </foreignObject>
                 </g>
@@ -132,7 +132,7 @@
                     </g>
                     <foreignObject width="98" height="20" x="47" y="5">
                         <select style="width:98px;height:20px;" name="input" disabled>
-                            <option value="pop">Pop</option>
+                            <option>Pop</option>
                         </select>
                     </foreignObject>
                 </g>
@@ -163,7 +163,7 @@
                         <text x="2" y="15" fill="white">Varible</text>
                     </g>
                 </g>-->
-
+                <g id="topBlocks"></g>
                 <g id="normalBlocks"></g>
             </svg>
             <input style="visibility: hidden;" type="file" id="fileToLoad" onchange="loadFileAsText()">

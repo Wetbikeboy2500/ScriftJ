@@ -70,6 +70,20 @@ function run (a) {//need to add new blocks and change how other blocks work
             get_sprites()[arr_pos].change_fill(a.getinput(0));
             delay = 0;
             break;
+        case 4:
+            if (a.getinput(0) === "squr") {
+                get_sprites()[arr_pos].change_points("0,0 100,0 100,100 0,100", 100, 100);
+            } else {
+                get_sprites()[arr_pos].change_points("0,0 200,0 200,100 0,100", 200, 100);
+            }
+            break;
+        case 6:
+            log("Say: " + a.getinput(0) + " for" + a.getinput(1) + " second(s)");
+            break;
+        case 7:
+            let audio = new Audio('res/'+a.getinput(0)+'.m4a');
+            audio.play();
+            break;
         case 9:
             if (/\S/.test(a.getinput(0))) {
                 get_sprites()[arr_pos].translate(0, a.getinput(0)).update_transform();
