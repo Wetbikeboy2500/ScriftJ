@@ -15,9 +15,7 @@ window.onmouseup = function () {
     //clear moving array and the objects being moved
     info("Mouse up");
     if (moving.length > 0) {
-        moving.forEach((a) => {
-            a.stop();
-        });
+        moving.forEach((a) => { a.stop(); });
         //this is where it looks for connections to other blocks
         var response = check_connect(moving[0]);
         //logic for connecting to other blocks and groups
@@ -30,12 +28,10 @@ window.onmouseup = function () {
                 //insert into array regardless if it is first or not
                 groups[response.group] = arrayInsertArray(groups[response.group], moving, groups[response.group].indexOf(response) + 1);
                 //now need to update everything in moving array about its new group
-                arrayForEach(moving, (a, i) => {
-                    a.group = response.group;
-                });
+                moving.forEach((a) => { a.group = response.group; });
                 //need to then update every blocks position of the new group
                 let h = 0;
-                arrayForEach(groups[response.group], (a, i) => {
+                groups[response.group].forEach((a) => {
                     a.x = groups[response.group][0].x;
                     a.y = groups[response.group][0].y + h;
                     a.render();
@@ -47,17 +43,13 @@ window.onmouseup = function () {
                 //add moving to a new group
                 arrayAdd(groups, moving);
                 //now set moving blocks to new group array number
-                arrayForEach(moving, (a, i) => {
-                    a.group = groups.length - 1;
-                });
+                moving.forEach((a) => { a.group = groups.length - 1; });
             }
         } else { //then delete this block and the others
             //first remove itself from previous group
             groups[moving[0].group] = arrayRemoveAfter(groups[moving[0].group], moving[0]);
             //now delete all objects in moving array
-            arrayForEach(moving, (a, i) => {
-                a.del();
-            });
+            moving.forEach((a) => { a.del(); });
         }
         clear_moving();
         //update sprites group no matter what
@@ -66,9 +58,6 @@ window.onmouseup = function () {
 };
 
 function switch_sprite (spr) {//this is in charge of switch sprites and making sure everything is loaded and render aka extremy important
-    /*
-    this is also currently very unsecure and could break many things when switch sprites while doing other things
-    */
     if (spr !== current_sprite) {
         log("switch sprite");
         current_sprite.group = groups;
@@ -84,13 +73,13 @@ function load () {
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { //checks to see what browser you are using
         info("Firefox Detected");
         let inputs = document.getElementsByTagName("input");
-        arrayForEach(inputs, function (a, i) {
+        inputs.forEach((a) => {
             a.style.position = "relative";
             a.style.bottom = "1px";
             a.style.right = "1px";
         });
     }
-    info("Version 12.4.2")
+    info("Version 12.5.0")
     sprite_id += 1;
     sprites[sprite_id] = new sprite("0,0 200,0 200,100 0,100", "green", sprite_id);
     sprite_id += 1;
@@ -117,9 +106,7 @@ function clear_moving () {
     moving = [];
 }
 function run_moving () {//this is an extremley important function for the movement
-    moving.forEach((a) => {
-        a.move();
-    });
+    moving.forEach((a) => { a.move(); });
 }
 function check_connect (a) {
     let can_connect = false;
