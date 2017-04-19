@@ -55,7 +55,7 @@ function run (a) {//need to add new blocks and change how other blocks work
     switch (a.type) {
         case 1: 
             if (/\S/.test(a.getinput(0))) {
-                log("say " + a.getinput(0));//need to mkae text box appear near sprite
+                get_sprites()[arr_pos].set_text(a.getinput(0)).update_text().show_text(-1);
             }
             delay = 0;
             break;
@@ -79,13 +79,17 @@ function run (a) {//need to add new blocks and change how other blocks work
             } else {
                 get_sprites()[arr_pos].change_points("0,0 200,0 200,100 0,100", 200, 100);
             }
+            delay = 0;
             break;
         case 6:
-            log("Say: " + a.getinput(0) + " for" + a.getinput(1) + " second(s)");
+            if (/\S/.test(a.getinput(0))) {
+                get_sprites()[arr_pos].set_text(a.getinput(0)).update_text().show_text(a.getinput(1) * 1000);
+            }
             break;
         case 7:
             let audio = new Audio('res/'+a.getinput(0)+'.m4a');
             audio.play();
+            delay = 0;
             break;
         case 9:
             if (/\S/.test(a.getinput(0))) {
@@ -97,16 +101,19 @@ function run (a) {//need to add new blocks and change how other blocks work
             if (/\S/.test(a.getinput(0))) {
                 get_sprites()[arr_pos].set_rotation(a.getinput(0)).update_transform();
             }
+            delay = 0;
             break
         case 11:
             if (/\S/.test(a.getinput(0))) {
                 get_sprites()[arr_pos].set_x(a.getinput(0)).update_transform();
             }
+            delay = 0;
             break;
         case 12:
             if (/\S/.test(a.getinput(0))) {
                 get_sprites()[arr_pos].set_y(a.getinput(0)).update_transform();
             }
+            delay = 0;
             break;
         default:
             log("Unknown Block Type");
