@@ -6,9 +6,6 @@
     height: 30px;
     border-radius: 5px; 
 }
-#dtext, #dtext1 {
-    visibility: hidden;
-}
 #scratchWindow {
     position: absolute;
     left: 10px;

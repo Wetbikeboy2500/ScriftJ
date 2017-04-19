@@ -146,9 +146,11 @@ main.appendChild(para.dom);
 }
 
 function create_sprite (p, f, id) {
-    //add in the stuff here
-    let player = document.getElementById("stagesprites");
-        let sprite = create_element().NS("polygon").att("points", p).att("style", "fill:" + f +"; fill-rule:evenodd;").att("id", id);
+    let fo = create_element().NS("foreignObject").att("width", 200).att("id", id + "i");
+    let pa = create_element().default("p").att("style", "visibility:hidden;padding:5px;margin:0px;border:1px solid black;background-color:#EBEBE4;border-radius:5px;max-width:200px;").att("id", id + "i2");
+    fo.dom.appendChild(pa.dom);
+    let player = document.getElementById("stagesprites"), sprite = create_element().NS("polygon").att("points", p).att("style", "fill:" + f +"; fill-rule:evenodd;").att("id", id);
+    player.appendChild(fo.dom);
     player.appendChild(sprite.dom);
 }
 
