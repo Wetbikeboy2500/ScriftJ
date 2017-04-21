@@ -15,7 +15,7 @@ class sprite {
         this.rotation = 0;
         this.text;
         //function to create sprite on canvas
-        create_sprite(this.svg_points, this.fill, "s" + this.id);
+        create_sprite(this.svg_points, this.fill, "s" + this.id, this.id);
         this.width = document.getElementById("s" + this.id).getBoundingClientRect().width;
         this.height = document.getElementById("s" + this.id).getBoundingClientRect().height;
     }

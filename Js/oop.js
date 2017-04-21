@@ -80,12 +80,10 @@ function load () {
         });
     }
     info("Version 12.5.0")
-    sprite_id += 1;
-    sprites[sprite_id] = new sprite("0,0 200,0 200,100 0,100", "green", sprite_id);
-    sprite_id += 1;
-    sprites[sprite_id] = new sprite("0,0 100,0 100,100 0,100", "orange", sprite_id);
-    current_sprite = sprites[0];//need to keep this to make sure the program can start off corectly
-    select_sprite(current_sprite);
+    new_sprite("green", "0,0 200,0 200,100 0,100", true);
+    //sprite_id += 1;
+    //sprites[sprite_id] = new sprite("0,0 100,0 100,100 0,100", "orange", sprite_id);
+    
 }
 
 function create_block (x, y, type) {
@@ -146,3 +144,15 @@ function input (obj1, a) {
     }
 }
 
+function new_sprite (c = "red", p = "0,0 100,0 100,100 0,100", b) {
+    if (sprite_id < 11) {
+        log("new sprite");
+        sprite_id += 1;
+        sprites[sprite_id] = new sprite(p, c, sprite_id);
+        if (b) {
+            current_sprite = sprites[0];
+            select_sprite(current_sprite);
+        }
+        switch_sprite(sprites[sprite_id]);
+    }
+}
