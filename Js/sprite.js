@@ -24,7 +24,7 @@ class sprite {
         return this;
     }
     add_rotation (r = 0) {
-        this.rotation += parseInt(r);
+        this.rotation = (this.rotation + parseInt(r));
         return this;
     }
     change_fill (c = "#000") {
@@ -38,7 +38,7 @@ class sprite {
         return this;
     }
     update_transform () {
-        console.log(this.x, this.y);
+        console.log(this.x, this.y, this.rotation);
         document.getElementById("s" + this.id).setAttribute("transform", "translate ("+ this.x +" "+ this.y +") rotate (" + this.rotation + " " + this.x + " " + this.y + ")");
         this.update_text();
         return this;
