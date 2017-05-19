@@ -1,4 +1,3 @@
-//this will work like the blocks except for the sprite
 class sprite {
     constructor (points, fill, id) {
         //points of the sprite
