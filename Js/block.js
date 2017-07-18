@@ -75,6 +75,7 @@ class block {
 
     move () {
         this.setup();
+        clearInterval(this.clock);
         this.clock = setInterval ( () => {
             this.update();
             this.setup();
