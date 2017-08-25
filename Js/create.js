@@ -1,5 +1,5 @@
 "use strict";
-let para, fara, cara, att, node, main, presprite = 0;
+let para, fara, cara, main, presprite = 0, y = 10;//presprite is the current selected sprite
 
 /*
 going to have to improve elements's prototype before shortening the rest of the code
@@ -145,13 +145,27 @@ main = document.getElementById("normalBlocks");
 main.appendChild(para.dom);
 }
 
-function create_sprite (p, f, id) {
+function create_sprite (p, f, id, num) {
+    //text for sprite
     let fo = create_element().NS("foreignObject").att("width", 200).att("id", id + "i");
-    let pa = create_element().default("p").att("style", "visibility:hidden;padding:5px;margin:0px;border:1px solid black;background-color:#EBEBE4;border-radius:5px;max-width:200px;").att("id", id + "i2");
+    let pa = create_element().default("p").att("style", "visibility:hidden;padding:5px;margin:0px;border:1px solid black;background-color:#EBEBE4;border-radius:5px;max-width:200px;").att("id", id + "i2");//this is the text box for the sprite
     fo.dom.appendChild(pa.dom);
+    //sets its new x position
+    let x = 115 * (num % 4) + 10;
+    
+    //rectangle for the sprite
+    let sel = create_element().NS("rect").att("onclick", "switch_sprite(sprites["+ num +"])").att("transform", "translate("+ x +", "+ y +")" ).att("id", "sprite" + num).att("width", 95).att("height", 130).att("rx", 5).att("ry", 5).att("style", "fill:#CECFCE;stroke-width:1;stroke:#575b57");
+    document.getElementById("spriteWindow2").appendChild(sel.dom);
+    //this is the sprite
     let player = document.getElementById("stagesprites"), sprite = create_element().NS("polygon").att("points", p).att("style", "fill:" + f +"; fill-rule:evenodd;").att("id", id);
     player.appendChild(fo.dom);
     player.appendChild(sprite.dom);
+    if ((num + 1) % 4 == 0) { //updates its y after creating all the stuff
+        y += 145;
+        let height = 150 + (Math.ceil((num + 1) / 4) * 145);
+        document.getElementById("spriteWindow").style.height = height;
+    }
+    
 }
 
 function select_sprite (spr) {

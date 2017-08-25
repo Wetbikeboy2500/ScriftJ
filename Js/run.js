@@ -63,6 +63,7 @@ function run (a) {//need to add new blocks and change how other blocks work
             if (/\S/.test(a.getinput(0))) {
                 get_sprites()[arr_pos].add_rotation(a.getinput(0)).update_transform();
             }
+            break;
         case 5:
             if (/\S/.test(a.getinput(0))) {
                 get_sprites()[arr_pos].translate(a.getinput(0)).update_transform();

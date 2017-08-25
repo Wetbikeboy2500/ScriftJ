@@ -1,4 +1,3 @@
-//this will work like the blocks except for the sprite
 class sprite {
     constructor (points, fill, id) {
         //points of the sprite
@@ -15,7 +14,7 @@ class sprite {
         this.rotation = 0;
         this.text;
         //function to create sprite on canvas
-        create_sprite(this.svg_points, this.fill, "s" + this.id);
+        create_sprite(this.svg_points, this.fill, "s" + this.id, this.id);
         this.width = document.getElementById("s" + this.id).getBoundingClientRect().width;
         this.height = document.getElementById("s" + this.id).getBoundingClientRect().height;
     }
@@ -24,7 +23,7 @@ class sprite {
         return this;
     }
     add_rotation (r = 0) {
-        this.rotation += parseInt(r);
+        this.rotation = (this.rotation + parseInt(r));
         return this;
     }
     change_fill (c = "#000") {
@@ -38,7 +37,7 @@ class sprite {
         return this;
     }
     update_transform () {
-        console.log(this.x, this.y);
+        console.log(this.x, this.y, this.rotation);
         document.getElementById("s" + this.id).setAttribute("transform", "translate ("+ this.x +" "+ this.y +") rotate (" + this.rotation + " " + this.x + " " + this.y + ")");
         this.update_text();
         return this;
