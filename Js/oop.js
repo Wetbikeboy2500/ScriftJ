@@ -145,7 +145,7 @@ function input (obj1, a) {
 }
 
 function new_sprite (c = "red", p = "0,0 100,0 100,100 0,100", b) {
-    if (sprite_id < 11) {
+    //if (sprite_id < 11) { limits the amount of sprites you can create
         log("new sprite");
         sprite_id += 1;
         sprites[sprite_id] = new sprite(p, c, sprite_id);
@@ -154,5 +154,5 @@ function new_sprite (c = "red", p = "0,0 100,0 100,100 0,100", b) {
             select_sprite(current_sprite);
         }
         switch_sprite(sprites[sprite_id]);
-    }
+    //}
 }

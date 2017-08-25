@@ -12,11 +12,18 @@
     top: 50px;
 }
 #spriteWindow {
+    border: 0px;
+    width: 480px;
+}
+#sprite_scroll {
+    border:1px solid #c3c3c3;
     position: absolute;
     left: 10px;
     top: 420px;
     width: 480px;
     height: calc(100% - 420px);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 #new_button {
     position: absolute;
@@ -85,11 +92,11 @@ input::-webkit-inner-spin-button {
     animation-name: ex2;
     animation-duration: 0.5s;
 }
-#homebutton{
+#homebutton {
     left: 80px;
     width: 80px;
 }
-#navbar{
+#navbar {
     position: absolute;
     top: 0px;
     left: 0px; 
@@ -98,18 +105,18 @@ input::-webkit-inner-spin-button {
     width: 100%;
     background-color: #00BAFF;
 }
-#spriteselect{
+#spriteselect {
     position: absolute;
     left: 10px;
     top: 435px;
 }
-.button:hover{
+.button:hover {
     -webkit-animation-name: ex1; 
     -webkit-animation-duration: 0.5s;
     animation-name: ex1;
     animation-duration: 0.5s;
 }
-.button:hover{
+.button:hover {
     background-color: #0c9ce4;
 }
 @keyframes ex1 {
