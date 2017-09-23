@@ -192,7 +192,7 @@ let block_info = [
             return 0;
         }
     },
-    {//
+    {
         type: "block",
         color: "#0060FF",
         id: 11,

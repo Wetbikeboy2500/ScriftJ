@@ -8,7 +8,7 @@ function  init_run () {
     get_sprites().forEach((a, i) => {
         sprites[i] = a.group;
     });
-    
+
     for (let i = 0; i < sprites.length; i++) {
         run_array[i] = sprites[i].filter((a) => {
             return a != 0 && a.length > 1 && a[0].type === "start";
@@ -52,17 +52,13 @@ function run_next (delay) {
 function run (a) {//need to add new blocks and change how other blocks work
     let delay = 0;
     log(a.type + " Block " + a.id + " with " + a.getinput(0) + " for sprite " + arr_pos);
-    switch (a.type) {
-        case "block":
-            console.log(a);
-            if (/\S/.test(a.getinput(0))) {
-                console.log("run code");
-                delay = a.thing.code(get_sprites()[arr_pos], a);
-            }
-            break;
-        default:
-            log("Unknown Block Type");
-            break;
+    if (a.type == "block") {
+        if (/\S/.test(a.getinput(0))) {
+            console.log("run code");
+            delay = a.thing.code(get_sprites()[arr_pos], a);
+        }
+    } else {
+        console.log("not block");
     }
     run_pos += 1;
     run_next(delay);//we can put a varible delay on this
