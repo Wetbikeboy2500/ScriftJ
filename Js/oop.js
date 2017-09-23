@@ -87,11 +87,9 @@ function load () {
     
 }
 
-function create_block (x, y, type) {
+function create_block (id, type) {
     block_id += 1;
-    log(x);
-    log(y);
-    obj[block_id] = new block(x, y, block_id, type);
+    obj[block_id] = new block(id, block_id, type);
     obj[block_id].set_dom();
     //add the new block to a new group
     obj[block_id].group = groups.length;

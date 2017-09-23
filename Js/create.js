@@ -33,7 +33,7 @@ let block_info = [
         type: "block",
         color: "#0060FF",
         id: 2,
-        index: 2,
+        index: 6,
         text: "Rotate",
         input_width: 95,
         input_type: "number",
@@ -49,7 +49,7 @@ let block_info = [
         type: "block",
         color: "#9900cc",
         id: 3,
-        index: 3,
+        index: 8,
         text: "Say",
         input_width: 108,
         input_type: "text",
@@ -65,7 +65,7 @@ let block_info = [
         type: "block",
         color: "#9900cc",
         id: 4,
-        index: 4,
+        index: 10,
         text: "Look",
         input_width: 100,
         input_type: "drop",
@@ -86,7 +86,7 @@ let block_info = [
         type: "block",
         color: "#9900cc",
         id: 5,
-        index: 5,
+        index: 11,
         text: "Shape",
         input_width: 100,
         input_type: "drop",
@@ -109,7 +109,7 @@ let block_info = [
         type: "block",
         color: "#0060FF",
         id: 6,
-        index: 6,
+        index: 2,
         text: "Change x",
         s_x: 10,
         s_y: null,
@@ -123,30 +123,9 @@ let block_info = [
     },
     {
         type: "block",
-        color: "#9900cc",
-        id: 7,
-        index: 7,
-        text: "Sound",
-        input_width: 100,
-        input_type: "drop",
-        options: {
-            pop: "Pop",
-            click: "Click",
-            beep: "Beep"   
-        },
-        s_x: 10,
-        s_y: null,
-        code: (a, obj) => {
-            let audio = new Audio('res/'+obj.getinput(0)+'.m4a');
-            audio.play();
-            return 0;
-        }
-    },
-    {
-        type: "block",
         color: "#bf00ff",
-        id: 8,
-        index: 8,
+        id: 7,
+        index: 12,
         text: "Sound",
         input_width: 100,
         input_type: "drop",
@@ -166,7 +145,7 @@ let block_info = [
     {
         type: "block",
         color: "#9900cc",
-        id: 9,
+        id: 8,
         index: 9,
         text: "Say",
         text2: "for",
@@ -179,6 +158,70 @@ let block_info = [
         code: (a, obj) => {
             a.set_text(obj.getinput(0)).update_text().show_text(obj.getinput(1) * 1000);
             return obj.getinput(1) * 1000;
+        }
+    },
+    {
+        type: "block",
+        color: "#0060FF",
+        id: 9,
+        index: 3,
+        text: "Change y",
+        s_x: 10,
+        s_y: null,
+        input_width: 78,
+        input_type: "number",
+        input: "type",
+        code: (a, obj) => {
+            a.translate(0, obj.getinput(0)).update_transform();
+            return 0;
+        }
+    },
+    {
+        type: "block",
+        color: "#0060FF",
+        id: 10,
+        index: 4,
+        text: "Set x",
+        s_x: 10,
+        s_y: null,
+        input_width: 103,
+        input_type: "number",
+        input: "type",
+        code: (a, obj) => {
+            a.set_x(obj.getinput(0)).update_transform();
+            return 0;
+        }
+    },
+    {//
+        type: "block",
+        color: "#0060FF",
+        id: 11,
+        index: 5,
+        text: "Set y",
+        s_x: 10,
+        s_y: null,
+        input_width: 103,
+        input_type: "number",
+        input: "type",
+        code: (a, obj) => {
+            a.set_y(obj.getinput(0)).update_transform();
+            return 0;
+        }
+    },
+    {
+        type: "block",
+        color: "#0060FF",
+        id: 12,
+        index: 7,
+        text: "Rotation",
+        s_x: 10,
+        s_y: null,
+        input_width: 82,
+        input_type: "number",
+        input: "type",
+        code: (a, obj) => {
+            a.set_rotation(obj.getinput(0)).update_transform();
+            return 0;
         }
     }
 ];
@@ -200,9 +243,8 @@ function load_blocks () {
 
 function improved_creation (a, id = null, display = false, value = "", value1 = "") {
     let event, enable_input, parent;
-    console.log(a.s_x, a.s_y);
     if (display) {//it should only create that block and nothing else
-        event = "create_block("+a.id+", 20, '"+a.type+"')";
+        event = "create_block("+a.id+", '"+a.type+"')";
         enable_input = true;
         parent = "editorWindow";
     } else {
@@ -248,160 +290,11 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
     } else {
         console.log("Block type not supported");
     }
-    /* create_element().default("select").att("style", "width:65px;height:20px;").att("onchange", "input(this, 0)").att("id", 'text' + id).option("red", "Red").option("blue", "Blue").option("green", "Green").option("yellow", "Yellow").select(value)*/
 }
 
-/*
-going to have to improve elements's prototype before shortening the rest of the code
-*/
-function createblock (target, t) { //this function will be removed once improved creation is completed
-    let type = target.type, id = target.id, x = target.x, y = target.y, color = target.color, value = target.value, value1 = target.value1;
-    console.log("Creating Element " + id + " with the color " + color);
-    para = create_element().NS("g").att("class", "bl").att("id", id).att("transform", "translate("+ x +","+ y +")");
-    main = document.getElementById("normalBlocks");
-    switch (type) {
-        case "block":
-            improved_creation(block_info[t], id, false, value, value1);
-            break;
-        case "start":
-            improved_creation(block_info[t], id, false, value, value1);
-            break;
-        case 0://start
-            para.att("onmousedown", 'moveblock(obj[' + id + '])');
-            cara = create_element().NS("polygon").att("points", "0,0 150,0 150,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
-            para.dom.appendChild(cara.dom)
-            main.appendChild(para.dom);
-            break;
-        case 1://say
-            createinputblock(x, y, 108, "Say:", "text", id, color, value);
-            break;
-        case 2://move
-            createinputblock(x, y, 95, "Rotate:", "number", id, color, value);
-            break;
-        case 3: //look block
-            //new code for look block
-            cara = element("g", "svg").a("onmousedown", 'moveblock(obj[' + id + '])').append(element("polygon", "svg").a("points", "0,0 115,0 115,15 110,15 110,5 45,5 45,25 110,25 110,15 115,15 115,30 0,30").a("style", "fill:"+ color +";fill-rule:evenodd;")).append(element("text", "svg").a("x", "2").a("y", "20").a("fill", "white").t("Look:"));
-            para.dom.appendChild(cara.dom);
-
-            //create svg element
-            /*cara = create_element().NS("g").att("onmousedown", 'moveblock(obj[' + id + '])');
-                fara = create_element().NS("polygon").att("points", "0,0 115,0 115,15 110,15 110,5 45,5 45,25 110,25 110,15 115,15 115,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
-            cara.dom.appendChild(fara.dom);
-                fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
-                fara.dom.appendChild(document.createTextNode("Look:"));
-              cara.dom.appendChild(fara.dom);
-            para.dom.appendChild(cara.dom);*/
-
-            cara = create_element().NS("foreignObject").att("width", "65").att("height", "20").att("x", "45").att("y", "5");
-            fara = create_element().default("select").att("style", "width:65px;height:20px;").att("onchange", "input(this, 0)").att("id", 'text' + id).option("red", "Red").option("blue", "Blue").option("green", "Green").option("yellow", "Yellow").select(value);
-            cara.dom.appendChild(fara.dom);
-            para.dom.appendChild(cara.dom);
-            main.appendChild(para.dom);
-            break;
-        case 4://Shape block
-            cara = create_element().NS("g").att("onmousedown", 'moveblock(obj[' + id + '])');
-            fara = create_element().NS("polygon").att("points", "0,0 135,0 135,15 130,15 130,5 45,5 45,25 130,25 130,15 135,15 135,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
-            cara.dom.appendChild(fara.dom);
-            fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
-            fara.dom.appendChild(document.createTextNode("Shape:"));
-            cara.dom.appendChild(fara.dom);
-            para.dom.appendChild(cara.dom);
-
-            cara = create_element().NS("foreignObject").att("width", "85").att("height", "20").att("x", "45").att("y", "5");
-            fara = create_element().default("select").att("style", "width:85px;height:20px;").att("onchange", "input(this, 0)").att("id", 'text' + id).option("squr", "Square").option("rect", "Rectangle").select(value);
-            cara.dom.appendChild(fara.dom);
-            para.dom.appendChild(cara.dom);
-            main.appendChild(para.dom);
-            break;
-        case 5://Chane X Block
-            createinputblock(x, y, 73, "Change x:", "number", id, color, value);
-            break;
-        case 6://Say x for x Block
-            cara = create_element().NS("g").att("onmousedown", 'moveblock(obj[' + id + '])');
-            fara = create_element().NS("polygon").att("points", "0,0 150,0 150,15 145,15 145,5 115,5 115,15 91,15 91,5 35,5 35,25 91,25 91,15 115,15 115,25 145,25 145,15 150,15 150,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
-            cara.dom.appendChild(fara.dom);
-            //say:
-            fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
-            fara.dom.appendChild(document.createTextNode("Say:"));
-            cara.dom.appendChild(fara.dom);
-            //for text
-            fara = create_element().NS("text").att("x", "95").att("y", "20").att("fill", "white");
-            fara.dom.appendChild(document.createTextNode("for"));
-            cara.dom.appendChild(fara.dom);
-            para.dom.appendChild(cara.dom);
-            //first foreign object
-            cara = create_element().NS("foreignObject").att("width", "53").att("height", "20").att("x", "35").att("y", "5");
-            fara = create_element().default("input").att("style", "width:53px;").att("id", 'text' + id).att("type", "text").att("name", "input").att("onchange", "input(this, 0)").att("value", value);
-            cara.dom.appendChild(fara.dom);
-            para.dom.appendChild(cara.dom);
-            //second foreign
-            cara = create_element().NS("foreignObject").att("width", "26").att("height", "20").att("x", "115").att("y", "5");
-            fara = create_element().default("input").att("style", "width:26px;").att("id", '1text' + id).att("type", "number").att("name", "input").att("onchange", "input(this, 1)").att("value", value1);
-            cara.dom.appendChild(fara.dom);
-            para.dom.appendChild(cara.dom);
-            main.appendChild(para.dom); 
-            break;
-        case 7://sound block
-            cara = create_element().NS("g").att("onmousedown", 'moveblock(obj[' + id + '])');
-            fara = create_element().NS("polygon").att("points", "0,0 105,0 105,15 100,15 100,5 48,5 48,25 100,25 100,15 105,15 105,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
-            cara.dom.appendChild(fara.dom);
-            fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
-            fara.dom.appendChild(document.createTextNode("Sound"));
-            cara.dom.appendChild(fara.dom);
-            para.dom.appendChild(cara.dom);
-
-            cara = create_element().NS("foreignObject").att("width", "55").att("height", "20").att("x", "47").att("y", "5");
-            fara = create_element().default("select").att("style", "width:55px;height:20px;").att("onchange", "input(this, 0)").att("id", 'text' + id).option("pop", "Pop").option("click", "Click").option("beep", "Beep").select(value);
-            cara.dom.appendChild(fara.dom);
-            para.dom.appendChild(cara.dom);
-            main.appendChild(para.dom);
-            break;
-        case 8://rotation block
-            createinputblock(x, y, 82, "Rotation:", "number", id, color, value);
-            break;
-        case 9://change y block
-            createinputblock(x, y, 73, "Change y:", "number", id, color, value);
-            break;
-        case 10://varible block
-            para.att("onmousedown", 'moveblock(obj[' + id + '])');
-            fara = create_element().NS("polygon").att("points", "0,0 50,0 50,21 0,21").att("style", "fill:"+ color +";fill-rule:evenodd;");
-            para.dom.appendChild(fara.dom);
-            fara = create_element().NS("text").att("x", "2").att("y", "15").att("fill", "white");
-            fara.dom.appendChild(document.createTextNode("Varible"));
-            para.dom.appendChild(fara.dom);
-            main = document.getElementById("topBlocks");
-            main.appendChild(para.dom);
-            break;
-        case 11:
-            createinputblock(x, y, 103, "Set x:", "number", id, color, value);
-            break;
-        case 12:
-            createinputblock(x, y, 103, "Set y:", "number", id, color, value);
-            break;
-        default:
-            log("Unknown Block Type");
-            break;
-                }
-
-}
-
-function createinputblock(x, y, w, text, type, id, color, value){
-    main = document.getElementById("normalBlocks");
-    para = create_element().NS("g").att("class", "bl").att("id", id).att("transform", "translate("+ x +","+ y +")");
-    cara = create_element().NS("g").att("onmousedown", 'moveblock(obj[' + id + '])');
-    fara = create_element().NS("polygon").att("points", "0,0 150,0 150,15 145,15 145,5 "+(143 - w)+",5 "+(143 - w)+",25 145,25 145,15 150,15 150,30 0,30").att("style", "fill:"+ color +";fill-rule:evenodd;");
-    cara.dom.appendChild(fara.dom);
-    fara = create_element().NS("text").att("x", "2").att("y", "20").att("fill", "white");
-    fara.dom.appendChild(document.createTextNode(text));
-    log(fara.dom.childNodes[0].clientWidth);
-    log(fara.dom);
-    cara.dom.appendChild(fara.dom);
-    para.dom.appendChild(cara.dom);
-    cara = create_element().NS("foreignObject").att("width", w).att("height", "21").att("x", 143 - w).att("y", "5");
-    fara = create_element().default("input").att("style", "width:"+w+"px;").att("id", 'text' + id).att("type", type).att("name", "input").att("value", value).att("onchange", "input(this, 0)");
-    cara.dom.appendChild(fara.dom);
-    para.dom.appendChild(cara.dom);
-    main.appendChild(para.dom);
+function createblock (target) { //this function will be removed once improved creation is completed
+    console.log("Creating Element " + target.id + " with the color " + target.color);
+    improved_creation(block_info[target.block_id], target.id, false, target.value, target.value1);
 }
 
 function create_sprite (p, f, id, num) {
