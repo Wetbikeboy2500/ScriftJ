@@ -241,21 +241,25 @@ function load_blocks () {
     }
 }
 
-function improved_creation (a, id = null, display = false, value = "", value1 = "") {
-    let event, enable_input, parent;
+function improved_creation (a, id = null, display = false, value = "", value1 = "", target = null) {
+    let event, enable_input, parent, x, y;
     if (display) {//it should only create that block and nothing else
         event = "create_block("+a.id+", '"+a.type+"')";
         enable_input = true;
         parent = "editorWindow";
+        x = a.s_x;
+        y = a.s_y;
     } else {
         event = 'moveblock(obj[' + id + '])';
         enable_input = false;
         parent = "normalBlocks";
+        x = target.x;
+        y = target.y;
     }
 
     if (a.type == "block") {
         if (a.input_type == "drop") {
-            element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ a.s_x +","+ a.s_y +")")
+            element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ x +","+ y +")")
                 .append(element("g", "svg").a("onmousedown", event)
                         .append(element("polygon", "svg").a("points", "0,0 10,0 10,5 20,5 20,0 150,0 150,15 145,15 145,5 "+(145 - a.input_width)+",5 "+(145 - a.input_width)+",25 145,25 145,15 150,15 150,30 20,30 20,35 10,35 10,30 0,30").a("style", "fill:" + a.color + ";fill-rule:evenodd;"))
                         .append(element("text", "svg").a("x", "2").a("y", "20").a("fill", "white").t(a.text)))
@@ -263,7 +267,7 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
                         .append(element("select").a("style", "width:"+ a.input_width +"px;height:20px;").a("onchange", "input(this, 0)").o(a.options, value).a("id", 'text' + id).d(enable_input, a.name)))
                 .apthis(document.getElementById(parent));
         } else if (a.input_type == "text2") {
-            element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ a.s_x +","+ a.s_y +")")
+            element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ x +","+ y +")")
                 .append(element("g", "svg").a("onmousedown", event)
                         .append(element("polygon", "svg").a("points", "0,0 10,0 10,5 20,5 20,0 150,0 150,15 145,15 145,5 115,5 115,15 91,15 91,5 35,5 35,25 91,25 91,15 115,15 115,25 145,25 145,15 150,15 150,30 20,30 20,35 10,35 10,30 0,30").a("style", "fill:" + a.color + ";fill-rule:evenodd;"))
                         .append(element("text", "svg").a("x", "2").a("y", "20").a("fill", "white").t(a.text))
@@ -274,7 +278,7 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
                         .append(element("input").a("style", "width: "+a.input2_width+"px;").a("type", "number").a("name", "input").a("value", value1).a("onchange", "input(this, 1)").a("id", '1text' + id).d(enable_input, a.name)))
                 .apthis(document.getElementById(parent));
         } else {
-            element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ a.s_x +","+ a.s_y +")")
+            element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ x +","+ y +")")
                 .append(element("g", "svg").a("onmousedown", event)
                         .append(element("polygon", "svg").a("points", "0,0 10,0 10,5 20,5 20,0 150,0 150,15 145,15 145,5 "+(143 - a.input_width)+",5 "+(143 - a.input_width)+",25 145,25 145,15 150,15 150,30 20,30 20,35 10,35 10,30 0,30").a("style", "fill:" + a.color + ";fill-rule:evenodd;"))
                         .append(element("text", "svg").a("x", "2").a("y", "20").a("fill", "white").t(a.text)))
@@ -283,7 +287,7 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
                 .apthis(document.getElementById(parent));
         }
     } else if (a.type == "start") {
-        element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ a.s_x +","+ a.s_y +")").a("onmousedown", event)
+        element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ x +","+ y +")").a("onmousedown", event)
             .append(element("polygon", "svg").a("points", "0,0 150,0 150,30 20,30 20,35 10,35 10,30 0,30").a("style", "fill:"+ a.color +";fill-rule:evenodd;"))
             .append(element("text", "svg").a("x", "2").a("y", "20").a("fill", "white").t(a.text))
             .apthis(document.getElementById(parent));
@@ -294,30 +298,28 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
 
 function createblock (target) { //this function will be removed once improved creation is completed
     console.log("Creating Element " + target.id + " with the color " + target.color);
-    improved_creation(block_info[target.block_id], target.id, false, target.value, target.value1);
+    improved_creation(block_info[target.block_id], target.id, false, target.value, target.value1, target);
 }
 
 function create_sprite (p, f, id, num) {
-    //text for sprite
-    let fo = create_element().NS("foreignObject").att("width", 200).att("id", id + "i");
-    let pa = create_element().default("p").att("style", "visibility:hidden;padding:5px;margin:0px;border:1px solid black;background-color:#EBEBE4;border-radius:5px;max-width:200px;").att("id", id + "i2");//this is the text box for the sprite
-    fo.dom.appendChild(pa.dom);
     //sets its new x position
-    let x = 115 * (num % 4) + 10;
-
-    //rectangle for the sprite
-    let sel = create_element().NS("rect").att("onclick", "switch_sprite(sprites["+ num +"])").att("transform", "translate("+ x +", "+ y +")" ).att("id", "sprite" + num).att("width", 95).att("height", 130).att("rx", 5).att("ry", 5).att("style", "fill:#CECFCE;stroke-width:1;stroke:#575b57");
-    document.getElementById("spriteWindow2").appendChild(sel.dom);
-    //this is the sprite
-    let player = document.getElementById("stagesprites"), sprite = create_element().NS("polygon").att("points", p).att("style", "fill:" + f +"; fill-rule:evenodd;").att("id", id);
-    player.appendChild(fo.dom);
-    player.appendChild(sprite.dom);
+    let x = 115 * (num % 4) + 10, player = document.getElementById("stagesprites");
+    //text for sprite
+    element("foreignObject", "svg").a("width", 200).a("id", id + "i")
+        .append(element("p").a("style", "visibility:hidden;padding:5px;margin:0px;border:1px solid black;background-color:#EBEBE4;border-radius:5px;max-width:200px;").a("id", id + "i2"))
+    .apthis(player);
+    //sprite
+    element("polygon", "svg").a("points", p).a("style", "fill:" + f +"; fill-rule:evenodd;").a("id", id)
+    .apthis(player);
+    //sprite selector rectangle
+    element("rect", "svg").a("onclick", "switch_sprite(sprites["+ num +"])").a("transform", "translate("+ x +", "+ y +")" ).a("id", "sprite" + num).a("width", 95).a("height", 130).a("rx", 5).a("ry", 5).a("style", "fill:#CECFCE;stroke-width:1;stroke:#575b57")
+    .apthis(document.getElementById("spriteWindow2"));
+    //updates sprite selector y position
     if ((num + 1) % 4 == 0) { //updates its y after creating all the stuff
         y += 145;
         let height = 150 + (Math.ceil((num + 1) / 4) * 145);
         document.getElementById("spriteWindow").style.height = height;
     }
-
 }
 
 function select_sprite (spr) {
