@@ -8,9 +8,11 @@ window.onmousemove = (event) => {
 };
 
 class block {
-    constructor (x, y, id, type) {
-        this.x = x;
-        this.y = y;
+    constructor (block_id, id, type) {
+        this.thing = get_block_info()[block_id];
+        this.block_id = block_id;
+        this.x = this.thing.s_x;
+        this.y = this.thing.s_y;
         this.id = id;
         this.type = type;
         this.sx;
@@ -20,27 +22,9 @@ class block {
         this.value = "";
         this.value1 = "";
         this.group;
-        //color
-        if (type === 0) {
-            this.color = "#EE7D16";
-        } else if (type === 7) {
-            this.color = "#bf00ff";
-        } else if (blue.includes(type)) {
-            this.color = "#0060FF";
-        } else if (purple.includes(type)) {
-            this.color = "#9900cc";
-        }
-        
-        if (type === 3) {
-            this.value = "red";
-        } else if (type === 7) {
-            this.value = "pop";
-        } else if (type === 4) {
-            this.value = "squr";
-        }
         createblock(this);
     }
-    
+
     getinput (a = 0) {
         if (a === 1) {
             return this.value1;

@@ -70,6 +70,7 @@ function switch_sprite (spr) {//this is in charge of switch sprites and making s
 
 function load () {
     info("Setting up page")
+    load_blocks();
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { //checks to see what browser you are using
         info("Firefox Detected");
         let inputs = document.getElementsByTagName("input");
@@ -86,11 +87,9 @@ function load () {
     
 }
 
-function create_block (x, y, type) {
+function create_block (id, type) {
     block_id += 1;
-    log(x);
-    log(y);
-    obj[block_id] = new block(x, y, block_id, type);
+    obj[block_id] = new block(id, block_id, type);
     obj[block_id].set_dom();
     //add the new block to a new group
     obj[block_id].group = groups.length;
@@ -108,7 +107,7 @@ function run_moving () {//this is an extremley important function for the moveme
 }
 function check_connect (a) {
     let can_connect = false;
-    if (a.type == 0) {
+    if (a.type == "start") {
         can_connect = "cc";
     } else {
         obj.forEach((b) => {

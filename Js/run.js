@@ -11,7 +11,7 @@ function  init_run () {
     
     for (let i = 0; i < sprites.length; i++) {
         run_array[i] = sprites[i].filter((a) => {
-            return a != 0 && a[0].type === 0 && a.length > 1;
+            return a != 0 && a.length > 1 && a[0].type === "start";
         });
     }
     let i = 0;
@@ -51,70 +51,14 @@ function run_next (delay) {
 
 function run (a) {//need to add new blocks and change how other blocks work
     let delay = 0;
-    log("Block " + a.id + " with " + a.getinput(0) + " for sprite " + arr_pos);
+    log(a.type + " Block " + a.id + " with " + a.getinput(0) + " for sprite " + arr_pos);
     switch (a.type) {
-        case 1: 
+        case "block":
+            console.log(a);
             if (/\S/.test(a.getinput(0))) {
-                get_sprites()[arr_pos].set_text(a.getinput(0)).update_text().show_text(-1);
+                console.log("run code");
+                delay = a.thing.code(get_sprites()[arr_pos], a);
             }
-            delay = 0;
-            break;
-        case 2:
-            if (/\S/.test(a.getinput(0))) {
-                get_sprites()[arr_pos].add_rotation(a.getinput(0)).update_transform();
-            }
-            break;
-        case 5:
-            if (/\S/.test(a.getinput(0))) {
-                get_sprites()[arr_pos].translate(a.getinput(0)).update_transform();
-            }
-            delay = 0;
-            break;
-        case 3:
-            get_sprites()[arr_pos].change_fill(a.getinput(0));
-            delay = 0;
-            break;
-        case 4:
-            if (a.getinput(0) === "squr") {
-                get_sprites()[arr_pos].change_points("0,0 100,0 100,100 0,100", 100, 100);
-            } else {
-                get_sprites()[arr_pos].change_points("0,0 200,0 200,100 0,100", 200, 100);
-            }
-            delay = 0;
-            break;
-        case 6:
-            if (/\S/.test(a.getinput(0))) {
-                get_sprites()[arr_pos].set_text(a.getinput(0)).update_text().show_text(a.getinput(1) * 1000);
-            }
-            break;
-        case 7:
-            let audio = new Audio('res/'+a.getinput(0)+'.m4a');
-            audio.play();
-            delay = 0;
-            break;
-        case 9:
-            if (/\S/.test(a.getinput(0))) {
-                get_sprites()[arr_pos].translate(0, a.getinput(0)).update_transform();
-            }
-            delay = 0;
-            break;
-        case 8:
-            if (/\S/.test(a.getinput(0))) {
-                get_sprites()[arr_pos].set_rotation(a.getinput(0)).update_transform();
-            }
-            delay = 0;
-            break
-        case 11:
-            if (/\S/.test(a.getinput(0))) {
-                get_sprites()[arr_pos].set_x(a.getinput(0)).update_transform();
-            }
-            delay = 0;
-            break;
-        case 12:
-            if (/\S/.test(a.getinput(0))) {
-                get_sprites()[arr_pos].set_y(a.getinput(0)).update_transform();
-            }
-            delay = 0;
             break;
         default:
             log("Unknown Block Type");
