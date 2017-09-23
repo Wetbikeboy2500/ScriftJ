@@ -30,7 +30,7 @@ class block {
         } else if (purple.includes(type)) {
             this.color = "#9900cc";
         }
-        
+
         if (type === 3) {
             this.value = "red";
         } else if (type === 7) {
@@ -38,9 +38,17 @@ class block {
         } else if (type === 4) {
             this.value = "squr";
         }
-        createblock(this);
+        //this is going to be for the new blocks and using x for type and smoother integration
+        this.thing = get_block_info()[x];
+        if (type == "block" || type == "start") { //update system to understand the start type block
+            this.x = this.thing.s_x;
+            this.y = this.thing.s_y;
+        }
+
+
+        createblock(this, x);
     }
-    
+
     getinput (a = 0) {
         if (a === 1) {
             return this.value1;

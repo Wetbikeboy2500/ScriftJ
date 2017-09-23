@@ -70,6 +70,7 @@ function switch_sprite (spr) {//this is in charge of switch sprites and making s
 
 function load () {
     info("Setting up page")
+    load_blocks();
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { //checks to see what browser you are using
         info("Firefox Detected");
         let inputs = document.getElementsByTagName("input");
@@ -108,7 +109,7 @@ function run_moving () {//this is an extremley important function for the moveme
 }
 function check_connect (a) {
     let can_connect = false;
-    if (a.type == 0) {
+    if (a.type == "start") {
         can_connect = "cc";
     } else {
         obj.forEach((b) => {

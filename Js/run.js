@@ -11,7 +11,7 @@ function  init_run () {
     
     for (let i = 0; i < sprites.length; i++) {
         run_array[i] = sprites[i].filter((a) => {
-            return a != 0 && a[0].type === 0 && a.length > 1;
+            return a != 0 && a.length > 1 && a[0].type === "start";
         });
     }
     let i = 0;
@@ -51,7 +51,7 @@ function run_next (delay) {
 
 function run (a) {//need to add new blocks and change how other blocks work
     let delay = 0;
-    log("Block " + a.id + " with " + a.getinput(0) + " for sprite " + arr_pos);
+    log(a.type + " Block " + a.id + " with " + a.getinput(0) + " for sprite " + arr_pos);
     switch (a.type) {
         case 1: 
             if (/\S/.test(a.getinput(0))) {
@@ -63,6 +63,7 @@ function run (a) {//need to add new blocks and change how other blocks work
             if (/\S/.test(a.getinput(0))) {
                 get_sprites()[arr_pos].add_rotation(a.getinput(0)).update_transform();
             }
+            delay = 0;
             break;
         case 5:
             if (/\S/.test(a.getinput(0))) {
@@ -71,7 +72,7 @@ function run (a) {//need to add new blocks and change how other blocks work
             delay = 0;
             break;
         case 3:
-            get_sprites()[arr_pos].change_fill(a.getinput(0));
+            
             delay = 0;
             break;
         case 4:
@@ -115,6 +116,13 @@ function run (a) {//need to add new blocks and change how other blocks work
                 get_sprites()[arr_pos].set_y(a.getinput(0)).update_transform();
             }
             delay = 0;
+            break;
+        case "block":
+            console.log(a);
+            if (/\S/.test(a.getinput(0))) {
+                console.log("run code");
+                delay = a.thing.code(get_sprites()[arr_pos], a);
+            }
             break;
         default:
             log("Unknown Block Type");
