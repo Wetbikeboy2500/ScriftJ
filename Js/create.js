@@ -312,8 +312,14 @@ function create_sprite (p, f, id, num) {
     element("polygon", "svg").a("points", p).a("style", "fill:" + f +"; fill-rule:evenodd;").a("id", id)
     .apthis(player);
     //sprite selector rectangle
-    element("rect", "svg").a("onclick", "switch_sprite(sprites["+ num +"])").a("transform", "translate("+ x +", "+ y +")" ).a("id", "sprite" + num).a("width", 95).a("height", 130).a("rx", 5).a("ry", 5).a("style", "fill:#CECFCE;stroke-width:1;stroke:#575b57")
+    let poly = element("polygon", "svg").a("points", p).a("style", "fill:" + f +"; fill-rule:evenodd;");
+    element("g", "svg").a("onclick", "switch_sprite(sprites["+ num +"])").a("transform", "translate("+ x +", "+ y +")" ).a("id", "sprite" + num)
+    .append(element("rect", "svg").a("width", 95).a("height", 130).a("rx", 5).a("ry", 5).a("style", "fill:#CECFCE;stroke-width:1;stroke:#575b57"))
+    .append(poly)
+    .append(element("text", "svg").a("transform", "translate(23, 120)").t("Sprite " + num))
     .apthis(document.getElementById("spriteWindow2"));
+    let s = poly.dom.getBoundingClientRect();
+    poly.a("transform", "scale("+90 / (s.right - s.left)+" "+(90 / (s.bottom - s.top)) * ((s.bottom - s.top) / (s.right - s.left))+") translate("+2.5 * (s.right - s.left) / (s.bottom - s.top)+" " + 10 * (s.right - s.left) / (s.bottom - s.top) + ")");
     //updates sprite selector y position
     if ((num + 1) % 4 == 0) { //updates its y after creating all the stuff
         y += 145;
@@ -324,10 +330,10 @@ function create_sprite (p, f, id, num) {
 
 function select_sprite (spr) {
     log("select sprite");
-    document.getElementById("sprite" + presprite).style.stroke = "#575b57";
+    document.getElementById("sprite" + presprite).children[0].style.stroke = "#575b57";
     presprite = spr.id;
     log(spr);
-    document.getElementById("sprite" + spr.id).style.stroke = "#00a3cc";
+    document.getElementById("sprite" + spr.id).children[0].style.stroke = "#00a3cc";
 }
 
 function reload_blocks (group) {
