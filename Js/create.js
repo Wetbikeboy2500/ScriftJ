@@ -237,19 +237,28 @@ function get_block_info (i = true) {
 function load_blocks () {
     for (let i = 0; i < block_info.length; i++) {
         block_info[i].s_y = (block_info[i].index * 35) + 5;
-        improved_creation(block_info[i], null, true);
+        improved_creation(i, true);
     }
 }
 
-function improved_creation (a, id = null, display = false, value = "", value1 = "", target = null) {
+function improved_creation (target, display = false) {
+    let a, id, value, value1;
     let event, enable_input, parent, x, y;
     if (display) {//it should only create that block and nothing else
+        a = block_info[target];
+        id = null;
+        value = "";
+        value1 = "";
         event = "create_block("+a.id+", '"+a.type+"')";
         enable_input = true;
         parent = "editorWindow";
         x = a.s_x;
         y = a.s_y;
     } else {
+        a = block_info[target.block_id];
+        id = target.id;
+        value = target.value;
+        value1 = target.value1;
         event = 'moveblock(obj[' + id + '])';
         enable_input = false;
         parent = "normalBlocks";
@@ -259,6 +268,7 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
 
     if (a.type == "block") {
         if (a.input_type == "drop") {
+            //dropdown block
             element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ x +","+ y +")")
                 .append(element("g", "svg").a("onmousedown", event)
                         .append(element("polygon", "svg").a("points", "0,0 10,0 10,5 20,5 20,0 150,0 150,15 145,15 145,5 "+(145 - a.input_width)+",5 "+(145 - a.input_width)+",25 145,25 145,15 150,15 150,30 20,30 20,35 10,35 10,30 0,30").a("style", "fill:" + a.color + ";fill-rule:evenodd;"))
@@ -267,6 +277,7 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
                         .append(element("select").a("style", "width:"+ a.input_width +"px;height:20px;").a("onchange", "input(this, 0)").o(a.options, value).a("id", 'text' + id).d(enable_input, a.name)))
                 .apthis(document.getElementById(parent));
         } else if (a.input_type == "text2") {
+            //dual input block
             element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ x +","+ y +")")
                 .append(element("g", "svg").a("onmousedown", event)
                         .append(element("polygon", "svg").a("points", "0,0 10,0 10,5 20,5 20,0 150,0 150,15 145,15 145,5 115,5 115,15 91,15 91,5 35,5 35,25 91,25 91,15 115,15 115,25 145,25 145,15 150,15 150,30 20,30 20,35 10,35 10,30 0,30").a("style", "fill:" + a.color + ";fill-rule:evenodd;"))
@@ -278,6 +289,7 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
                         .append(element("input").a("style", "width: "+a.input2_width+"px;").a("type", "number").a("name", "input").a("value", value1).a("onchange", "input(this, 1)").a("id", '1text' + id).d(enable_input, a.name)))
                 .apthis(document.getElementById(parent));
         } else {
+            //single input block
             element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ x +","+ y +")")
                 .append(element("g", "svg").a("onmousedown", event)
                         .append(element("polygon", "svg").a("points", "0,0 10,0 10,5 20,5 20,0 150,0 150,15 145,15 145,5 "+(143 - a.input_width)+",5 "+(143 - a.input_width)+",25 145,25 145,15 150,15 150,30 20,30 20,35 10,35 10,30 0,30").a("style", "fill:" + a.color + ";fill-rule:evenodd;"))
@@ -287,6 +299,7 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
                 .apthis(document.getElementById(parent));
         }
     } else if (a.type == "start") {
+        //start block and hat blocks in the future
         element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ x +","+ y +")").a("onmousedown", event)
             .append(element("polygon", "svg").a("points", "0,0 150,0 150,30 20,30 20,35 10,35 10,30 0,30").a("style", "fill:"+ a.color +";fill-rule:evenodd;"))
             .append(element("text", "svg").a("x", "2").a("y", "20").a("fill", "white").t(a.text))
@@ -294,11 +307,6 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
     } else {
         console.log("Block type not supported");
     }
-}
-
-function createblock (target) { //this function will be removed once improved creation is completed
-    console.log("Creating Element " + target.id + " with the color " + target.color);
-    improved_creation(block_info[target.block_id], target.id, false, target.value, target.value1, target);
 }
 
 function create_sprite (p, f, id, num) {
@@ -348,7 +356,7 @@ function reload_blocks (group) {
         });
         for (let i = 0; i < new_group.length; i++) {
             for (let i2 = 0; i2 < new_group[i].length; i2++) {
-                createblock(new_group[i][i2]);
+                improved_creation(new_group[i][i2]);
                 new_group[i][i2].set_dom();
             }
         }
