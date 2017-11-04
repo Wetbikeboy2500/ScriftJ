@@ -192,7 +192,7 @@ let block_info = [
             return 0;
         }
     },
-    {//
+    {
         type: "block",
         color: "#0060FF",
         id: 11,
@@ -237,19 +237,28 @@ function get_block_info (i = true) {
 function load_blocks () {
     for (let i = 0; i < block_info.length; i++) {
         block_info[i].s_y = (block_info[i].index * 35) + 5;
-        improved_creation(block_info[i], null, true);
+        improved_creation(i, true);
     }
 }
 
-function improved_creation (a, id = null, display = false, value = "", value1 = "", target = null) {
+function improved_creation (target, display = false) {
+    let a, id, value, value1;
     let event, enable_input, parent, x, y;
     if (display) {//it should only create that block and nothing else
+        a = block_info[target];
+        id = null;
+        value = "";
+        value1 = "";
         event = "create_block("+a.id+", '"+a.type+"')";
         enable_input = true;
         parent = "editorWindow";
         x = a.s_x;
         y = a.s_y;
     } else {
+        a = block_info[target.block_id];
+        id = target.id;
+        value = target.value;
+        value1 = target.value1;
         event = 'moveblock(obj[' + id + '])';
         enable_input = false;
         parent = "normalBlocks";
@@ -259,6 +268,7 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
 
     if (a.type == "block") {
         if (a.input_type == "drop") {
+            //dropdown block
             element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ x +","+ y +")")
                 .append(element("g", "svg").a("onmousedown", event)
                         .append(element("polygon", "svg").a("points", "0,0 10,0 10,5 20,5 20,0 150,0 150,15 145,15 145,5 "+(145 - a.input_width)+",5 "+(145 - a.input_width)+",25 145,25 145,15 150,15 150,30 20,30 20,35 10,35 10,30 0,30").a("style", "fill:" + a.color + ";fill-rule:evenodd;"))
@@ -267,6 +277,7 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
                         .append(element("select").a("style", "width:"+ a.input_width +"px;height:20px;").a("onchange", "input(this, 0)").o(a.options, value).a("id", 'text' + id).d(enable_input, a.name)))
                 .apthis(document.getElementById(parent));
         } else if (a.input_type == "text2") {
+            //dual input block
             element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ x +","+ y +")")
                 .append(element("g", "svg").a("onmousedown", event)
                         .append(element("polygon", "svg").a("points", "0,0 10,0 10,5 20,5 20,0 150,0 150,15 145,15 145,5 115,5 115,15 91,15 91,5 35,5 35,25 91,25 91,15 115,15 115,25 145,25 145,15 150,15 150,30 20,30 20,35 10,35 10,30 0,30").a("style", "fill:" + a.color + ";fill-rule:evenodd;"))
@@ -278,6 +289,7 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
                         .append(element("input").a("style", "width: "+a.input2_width+"px;").a("type", "number").a("name", "input").a("value", value1).a("onchange", "input(this, 1)").a("id", '1text' + id).d(enable_input, a.name)))
                 .apthis(document.getElementById(parent));
         } else {
+            //single input block
             element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ x +","+ y +")")
                 .append(element("g", "svg").a("onmousedown", event)
                         .append(element("polygon", "svg").a("points", "0,0 10,0 10,5 20,5 20,0 150,0 150,15 145,15 145,5 "+(143 - a.input_width)+",5 "+(143 - a.input_width)+",25 145,25 145,15 150,15 150,30 20,30 20,35 10,35 10,30 0,30").a("style", "fill:" + a.color + ";fill-rule:evenodd;"))
@@ -287,6 +299,7 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
                 .apthis(document.getElementById(parent));
         }
     } else if (a.type == "start") {
+        //start block and hat blocks in the future
         element("g", "svg").a("class", "bl").a("id", id).a("transform", "translate("+ x +","+ y +")").a("onmousedown", event)
             .append(element("polygon", "svg").a("points", "0,0 150,0 150,30 20,30 20,35 10,35 10,30 0,30").a("style", "fill:"+ a.color +";fill-rule:evenodd;"))
             .append(element("text", "svg").a("x", "2").a("y", "20").a("fill", "white").t(a.text))
@@ -294,11 +307,6 @@ function improved_creation (a, id = null, display = false, value = "", value1 = 
     } else {
         console.log("Block type not supported");
     }
-}
-
-function createblock (target) { //this function will be removed once improved creation is completed
-    console.log("Creating Element " + target.id + " with the color " + target.color);
-    improved_creation(block_info[target.block_id], target.id, false, target.value, target.value1, target);
 }
 
 function create_sprite (p, f, id, num) {
@@ -312,8 +320,14 @@ function create_sprite (p, f, id, num) {
     element("polygon", "svg").a("points", p).a("style", "fill:" + f +"; fill-rule:evenodd;").a("id", id)
     .apthis(player);
     //sprite selector rectangle
-    element("rect", "svg").a("onclick", "switch_sprite(sprites["+ num +"])").a("transform", "translate("+ x +", "+ y +")" ).a("id", "sprite" + num).a("width", 95).a("height", 130).a("rx", 5).a("ry", 5).a("style", "fill:#CECFCE;stroke-width:1;stroke:#575b57")
+    let poly = element("polygon", "svg").a("points", p).a("style", "fill:" + f +"; fill-rule:evenodd;");
+    element("g", "svg").a("onclick", "switch_sprite(sprites["+ num +"])").a("transform", "translate("+ x +", "+ y +")" ).a("id", "sprite" + num)
+    .append(element("rect", "svg").a("width", 95).a("height", 130).a("rx", 5).a("ry", 5).a("style", "fill:#CECFCE;stroke-width:1;stroke:#575b57"))
+    .append(poly)
+    .append(element("text", "svg").a("transform", "translate(23, 120)").t("Sprite " + num))
     .apthis(document.getElementById("spriteWindow2"));
+    let s = poly.dom.getBoundingClientRect();
+    poly.a("transform", "scale("+90 / (s.right - s.left)+" "+(90 / (s.bottom - s.top)) * ((s.bottom - s.top) / (s.right - s.left))+") translate("+2.5 * (s.right - s.left) / (s.bottom - s.top)+" " + 10 * (s.right - s.left) / (s.bottom - s.top) + ")");
     //updates sprite selector y position
     if ((num + 1) % 4 == 0) { //updates its y after creating all the stuff
         y += 145;
@@ -324,10 +338,10 @@ function create_sprite (p, f, id, num) {
 
 function select_sprite (spr) {
     log("select sprite");
-    document.getElementById("sprite" + presprite).style.stroke = "#575b57";
+    document.getElementById("sprite" + presprite).children[0].style.stroke = "#575b57";
     presprite = spr.id;
     log(spr);
-    document.getElementById("sprite" + spr.id).style.stroke = "#00a3cc";
+    document.getElementById("sprite" + spr.id).children[0].style.stroke = "#00a3cc";
 }
 
 function reload_blocks (group) {
@@ -342,7 +356,7 @@ function reload_blocks (group) {
         });
         for (let i = 0; i < new_group.length; i++) {
             for (let i2 = 0; i2 < new_group[i].length; i2++) {
-                createblock(new_group[i][i2]);
+                improved_creation(new_group[i][i2]);
                 new_group[i][i2].set_dom();
             }
         }

@@ -75,7 +75,7 @@ class sprite {
     }
     update_text () {
         let fo = document.getElementById("s" + this.id + "i");
-        fo.setAttribute("x", this.x + this.width);
+        fo.setAttribute("x", Number(this.x) + Number(this.width));
         fo.setAttribute("y", this.y);
         document.getElementById("s" + this.id + "i2").innerHTML = this.text;
         return this;

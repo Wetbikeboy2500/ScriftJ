@@ -1,7 +1,5 @@
 let mx, my;
 
-let blue = [2,5,9,8,12,11], purple = [1,3,4,6];
-
 window.onmousemove = (event) => {
     mx = event.pageX;
     my = event.pageY;
@@ -22,7 +20,7 @@ class block {
         this.value = "";
         this.value1 = "";
         this.group;
-        createblock(this);
+        improved_creation(this);
     }
 
     getinput (a = 0) {

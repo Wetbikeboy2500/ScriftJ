@@ -1,4 +1,4 @@
-
+//I currently have an updated version in another project
 function saveTextAsFile() {
 	var textToWrite = savecompress();//document.getElementById("inputTextToSave").value;
 	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
